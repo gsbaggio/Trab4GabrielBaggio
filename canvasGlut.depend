@@ -1,0 +1,42 @@
+# depslib dependency file v1.0
+1740581235 source:c:\users\samsung\desktop\cg\demos\1_cv_canvasglut\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1740581020 c:\users\samsung\desktop\cg\demos\1_cv_canvasglut\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"Vector2.h"
+
+1632060799 c:\users\samsung\desktop\cg\demos\include\gl\glut.h
+	"freeglut_std.h"
+
+1632060797 c:\users\samsung\desktop\cg\demos\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1632060794 c:\users\samsung\desktop\cg\demos\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1589217858 c:\users\samsung\desktop\cg\demos\1_cv_canvasglut\src\vector2.h
+
+1589218349 source:c:\users\samsung\desktop\cg\demos\1_cv_canvasglut\src\relogio.cpp
+	"Relogio.h"
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+
+1193164156 c:\users\samsung\desktop\cg\demos\1_cv_canvasglut\src\relogio.h
+	"gl_canvas2d.h"
+
