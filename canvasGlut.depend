@@ -40,3 +40,36 @@
 1193164156 c:\users\samsung\desktop\cg\demos\1_cv_canvasglut\src\relogio.h
 	"gl_canvas2d.h"
 
+1740581235 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1740581020 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"Vector2.h"
+
+1589217858 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\vector2.h
+
+1748951783 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	"gl_canvas2d.h"
+	"Relogio.h"
+
+1193164156 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\relogio.h
+	"gl_canvas2d.h"
+
+1589218349 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\relogio.cpp
+	"Relogio.h"
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+

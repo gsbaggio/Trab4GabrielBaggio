@@ -1,18 +1,3 @@
-/*********************************************************************
-// Canvas para desenho, criada sobre a API OpenGL. Nao eh necessario conhecimentos de OpenGL para usar.
-//  Autor: Cesar Tadeu Pozzer
-//         02/2025
-//
-//  Pode ser utilizada para fazer desenhos, animacoes, e jogos simples.
-//  Tem tratamento de mouse e teclado
-//  Estude o OpenGL antes de tentar compreender o arquivo gl_canvas.cpp
-//
-//  Versao 2.1
-//
-//  Instru��es:
-//	  Para alterar a animacao, digite numeros entre 1 e 3
-// *********************************************************************/
-
 #include <GL/glut.h>
 #include <GL/freeglut_ext.h> //callback da wheel do mouse.
 
@@ -29,7 +14,6 @@ int screenWidth = 500, screenHeight = 500;
 
 
 Relogio *r = NULL;
-int opcao  = 50;//variavel global para selecao do que sera exibido na canvas.
 int mouseX, mouseY; //variaveis globais do mouse para poder exibir dentro da render().
 
 
@@ -44,8 +28,8 @@ void render()
    CV::translate(100, 100);
    CV::color(1, 0, 0);
    CV::circle(0, 0, 20, 20);
-    CV::translate(0, 0);
-    CV::circle(0, 0, 20, 20);
+   CV::translate(0, 0);
+   CV::circle(0, 0, 20, 20);
 
 
    Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
@@ -55,16 +39,12 @@ void render()
 void keyboard(int key)
 {
    printf("\nTecla: %d" , key);
-   if( key < 200 )
-   {
-      opcao = key;
-   }
 
    switch(key)
    {
       case 27:
 	     exit(0);
-	  break;
+	   break;
 
    }
 }
@@ -81,7 +61,7 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
    mouseX = x; //guarda as coordenadas do mouse para exibir dentro da render()
    mouseY = y;
 
-   printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
+   //printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
 
    if( state == 0 ) //clicou
    {
