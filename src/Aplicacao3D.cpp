@@ -71,10 +71,13 @@ void Aplicacao3D::desenhar()
     // SEGUNDO: Mascarar as bordas para limitar a área 3D
     CV::color(0.1f, 0.1f, 0.1f); // Cor de fundo para mascarar
     
-    // Mascarar borda superior da área 3D
+    // Mascarar TODA a área esquerda da tela (onde não deve aparecer o objeto 3D)
+    CV::rectFill(0, 0, metadeLargura, alturaTela);
+    
+    // Mascarar borda superior da área 3D (lado direito)
     CV::rectFill(metadeLargura, 0, larguraTela, 50);
     
-    // Mascarar borda inferior da área 3D  
+    // Mascarar borda inferior da área 3D (lado direito)
     CV::rectFill(metadeLargura, alturaTela - 50, larguraTela, alturaTela);
     
     // Mascarar borda esquerda da área 3D (entre as duas metades)
