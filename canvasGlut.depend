@@ -73,12 +73,12 @@
 	<stdio.h>
 	<stdlib.h>
 
-1749071242 source:c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
+1749071905 source:c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
 	"Aplicacao3D.h"
 	"gl_canvas2d.h"
 	<stdio.h>
 
-1749071551 c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.h
+1749071726 c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.h
 	"CurvaBezier.h"
 	"Objeto3D.h"
 	"Vector2.h"
@@ -136,7 +136,7 @@
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1749071549 source:c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\main.cpp
+1749071732 source:c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>

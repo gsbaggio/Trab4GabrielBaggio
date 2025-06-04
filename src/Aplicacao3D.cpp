@@ -158,6 +158,7 @@ void Aplicacao3D::desenharInterface()
     
     // Instruções do lado direito
     CV::color(1, 1, 1);
+    CV::text(metadeLargura + 15, 170, "Setas: Transladar objeto");
     CV::text(metadeLargura + 15, 150, "Mouse: Rotacionar objeto");
     CV::text(metadeLargura + 15, 130, "I/O: Zoom in/out");
     CV::text(metadeLargura + 15, 110, "N: Mostrar normais");
@@ -167,7 +168,7 @@ void Aplicacao3D::desenharInterface()
     if (objeto) {
         char buffer[100];
         sprintf(buffer, "Triangulos: %d", objeto->getNumTriangulos());
-        CV::text(metadeLargura + 15, 170, buffer);
+        CV::text(metadeLargura + 15, 190, buffer);
         
         CV::color(0, 1, 1);
         CV::text(metadeLargura + 15, 70, objeto->getProjecaoPerspectiva() ? "Perspectiva" : "Ortografica");
@@ -293,25 +294,25 @@ void Aplicacao3D::onKeyboard(int key)
             break;
             
         // Setas do teclado para translação
-        case 200: // Seta para cima
+        case 201: // Seta para cima
             if (objeto) {
                 objeto->transladar(0, -10, 0); // Move para cima (Y negativo)
             }
             break;
             
-        case 201: // Seta para baixo
+        case 203: // Seta para baixo
             if (objeto) {
                 objeto->transladar(0, 10, 0); // Move para baixo (Y positivo)
             }
             break;
             
-        case 202: // Seta para esquerda
+        case 200: // Seta para esquerda
             if (objeto) {
                 objeto->transladar(-10, 0, 0); // Move para esquerda (X negativo)
             }
             break;
             
-        case 203: // Seta para direita
+        case 202: // Seta para direita
             if (objeto) {
                 objeto->transladar(10, 0, 0); // Move para direita (X positivo)
             }
