@@ -57,7 +57,7 @@ bool Aplicacao3D::mouseNaVisualizacao(int x)
 void Aplicacao3D::atualizar()
 {
     // Atualizar objeto 3D quando necessário
-    if (curva->getNumPontosCurva() > 0) {
+    if (curva->getNumPontosControle() >= 2) {
         objeto->atualizarObjeto();
     }
 }
@@ -142,33 +142,41 @@ void Aplicacao3D::desenharInterface()
     
     // Borda da área de visualização 3D
     CV::color(0.5f, 0.5f, 0.5f);
-    CV::rect(metadeLargura + 10, 50, larguraTela - 10, alturaTela - 50);
-      // Instruções do lado esquerdo
+    CV::rect(metadeLargura + 10, 50, larguraTela - 10, alturaTela - 50);    // Instruções do lado esquerdo
     CV::color(1, 1, 1);
     CV::text(15, 70, "A: Adicionar ponto");
     CV::text(15, 90, "D: Deletar ultimo ponto (min. 2)");
     CV::text(15, 110, "Clique/Arraste: Mover ponto");
+    CV::text(15, 130, "J/K: Diminuir/Aumentar pontos curva");
     
     // Informações da curva
     if (curva) {
         char buffer[100];
         sprintf(buffer, "Pontos de controle: %d", curva->getNumPontosControle());
-        CV::text(15, 130, buffer);
-    }
-    
-    // Instruções do lado direito
+        CV::text(15, 150, buffer);
+        
+        sprintf(buffer, "Pontos de amostragem: %d", curva->getNumPontosCurva());
+        CV::text(15, 170, buffer);
+    }    // Instruções do lado direito
     CV::color(1, 1, 1);
-    CV::text(metadeLargura + 15, 170, "Setas: Transladar objeto");
-    CV::text(metadeLargura + 15, 150, "Mouse: Rotacionar objeto");
-    CV::text(metadeLargura + 15, 130, "I/O: Zoom in/out");
-    CV::text(metadeLargura + 15, 110, "N: Mostrar normais");
-    CV::text(metadeLargura + 15, 90, "P: Alternar projecao");
+    CV::text(metadeLargura + 15, 190, "Setas: Transladar objeto");
+    CV::text(metadeLargura + 15, 170, "Mouse: Rotacionar objeto");
+    CV::text(metadeLargura + 15, 150, "I/O: Zoom in/out");
+    CV::text(metadeLargura + 15, 130, "N: Mostrar normais");
+    CV::text(metadeLargura + 15, 110, "P: Alternar projecao");
+    CV::text(metadeLargura + 15, 90, "J/K: Diminuir/Aumentar divisoes de rotacao");
     
     // Informações do objeto 3D
     if (objeto) {
         char buffer[100];
         sprintf(buffer, "Triangulos: %d", objeto->getNumTriangulos());
-        CV::text(metadeLargura + 15, 190, buffer);
+        CV::text(metadeLargura + 15, 210, buffer);
+        
+        sprintf(buffer, "Vertices: %d", objeto->getNumVertices());
+        CV::text(metadeLargura + 15, 230, buffer);
+        
+        sprintf(buffer, "Divisoes rotacao: %d", objeto->getNumDivisoesRotacao());
+        CV::text(metadeLargura + 15, 250, buffer);
         
         CV::color(0, 1, 1);
         CV::text(metadeLargura + 15, 70, objeto->getProjecaoPerspectiva() ? "Perspectiva" : "Ortografica");
@@ -284,12 +292,52 @@ void Aplicacao3D::onKeyboard(int key)
             if (objeto) {
                 objeto->definirProjecaoPerspectiva(!objeto->getProjecaoPerspectiva());
             }
-            break;
-              case 'r':
+            break;        case 'r':
         case 'R':
             // Resetar rotação e escala do objeto
             if (objeto) {
                 objeto->resetarTransformacoes();
+            }
+            break;
+              case 'j':
+        case 'J':
+            if (mouseNaEdicao(posicaoAtualMouse.x)) {
+                // Lado esquerdo - diminuir pontos da curva (mínimo 10)
+                if (curva) {
+                    int pontosAtuais = curva->getNumPontosCurva();
+                    if (pontosAtuais > 10) {
+                        curva->definirNumeropontos(pontosAtuais - 10);
+                    }
+                }
+            } else {
+                // Lado direito - dividir número de faces por 2 (mínimo 8)
+                if (objeto) {
+                    int divisoesAtuais = objeto->getNumDivisoesRotacao();
+                    if (divisoesAtuais > 8) {
+                        objeto->definirDivisoesRotacao(divisoesAtuais / 2);
+                    }
+                }
+            }
+            break;
+            
+        case 'k':
+        case 'K':
+            if (mouseNaEdicao(posicaoAtualMouse.x)) {
+                // Lado esquerdo - aumentar pontos da curva (máximo 200)
+                if (curva) {
+                    int pontosAtuais = curva->getNumPontosCurva();
+                    if (pontosAtuais < 200) {
+                        curva->definirNumeropontos(pontosAtuais + 10);
+                    }
+                }
+            } else {
+                // Lado direito - multiplicar número de faces por 2 (máximo 80)
+                if (objeto) {
+                    int divisoesAtuais = objeto->getNumDivisoesRotacao();
+                    if (divisoesAtuais < 80) {
+                        objeto->definirDivisoesRotacao(divisoesAtuais * 2);
+                    }
+                }
             }
             break;
             

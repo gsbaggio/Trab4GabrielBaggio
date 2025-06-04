@@ -73,10 +73,10 @@ public:
     // Geração e renderização
     void atualizarObjeto();
     void desenhar();
-    void desenharNormais();
-      // Getters
+    void desenharNormais();    // Getters
     int getNumTriangulos() { return triangulos.size(); }
     int getNumVertices() { return vertices.size(); }
+    int getNumDivisoesRotacao() { return numDivisoesRotacao; }
     bool getMostrarNormais() { return mostrarNormais; }
     bool getModoWireframe() { return modoWireframe; }
     bool getProjecaoPerspectiva() { return projecaoPerspectiva; }
