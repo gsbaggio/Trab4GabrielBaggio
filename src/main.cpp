@@ -6,14 +6,12 @@
 #include <stdlib.h>
 
 #include "gl_canvas2d.h"
-
-#include "Relogio.h"
+#include "Aplicacao3D.h"
 
 //largura e altura inicial da tela . Alteram com o redimensionamento de tela.
-int screenWidth = 500, screenHeight = 500;
+int screenWidth = 1080, screenHeight = 720;
 
-
-Relogio *r = NULL;
+Aplicacao3D *app = NULL;
 int mouseX, mouseY; //variaveis globais do mouse para poder exibir dentro da render().
 
 
@@ -22,30 +20,17 @@ int mouseX, mouseY; //variaveis globais do mouse para poder exibir dentro da ren
 //Deve-se manter essa fun��o com poucas linhas de codigo.
 void render()
 {
-   CV::text(20,500,"Programa Demo Canvas2D");
-
-
-   CV::translate(100, 100);
-   CV::color(1, 0, 0);
-   CV::circle(0, 0, 20, 20);
-   CV::translate(0, 0);
-   CV::circle(0, 0, 20, 20);
-
-
-   Sleep(10); //nao eh controle de FPS. Somente um limitador de FPS.
+   if (app) {
+       app->atualizar();
+       app->desenhar();
+   }
 }
 
 //funcao chamada toda vez que uma tecla for pressionada.
 void keyboard(int key)
 {
-   printf("\nTecla: %d" , key);
-
-   switch(key)
-   {
-      case 27:
-	     exit(0);
-	   break;
-
+   if (app) {
+       app->onKeyboard(key);
    }
 }
 
@@ -61,18 +46,24 @@ void mouse(int button, int state, int wheel, int direction, int x, int y)
    mouseX = x; //guarda as coordenadas do mouse para exibir dentro da render()
    mouseY = y;
 
-   //printf("\nmouse %d %d %d %d %d %d", button, state, wheel, direction,  x, y);
-
-   if( state == 0 ) //clicou
-   {
-       
+   if (app) {
+       if (button != -2) { // Se não for movimento do mouse
+           app->onMouseClick(button, state, x, y);
+       } else {
+           app->onMouseMove(x, y);
+       }
    }
 }
 
 int main(void)
 {
-   r = new Relogio();
+   app = new Aplicacao3D();
+   app->definirDimensoesTela(screenWidth, screenHeight);
+   app->inicializar();
 
-   CV::init(&screenWidth, &screenHeight, "Titulo da Janela: Canvas 2D - Pressione 1, 2, 3");
+   CV::init(&screenWidth, &screenHeight, "Modelagem 3D - Curvas de Bezier e Sweep Rotacional");
    CV::run();
+   
+   delete app;
+   return 0;
 }

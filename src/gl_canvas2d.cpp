@@ -70,6 +70,14 @@ void CV::line( float x1, float y1, float x2, float y2 )
    glEnd();
 }
 
+void CV::line( Vector2 p1, Vector2 p2 )
+{
+   glBegin(GL_LINES);
+      glVertex2d(p1.x, p1.y);
+      glVertex2d(p2.x, p2.y);
+   glEnd();
+}
+
 void CV::rect( float x1, float y1, float x2, float y2 )
 {
    glBegin(GL_LINE_LOOP);
@@ -77,6 +85,16 @@ void CV::rect( float x1, float y1, float x2, float y2 )
       glVertex2d(x1, y2);
       glVertex2d(x2, y2);
       glVertex2d(x2, y1);
+   glEnd();
+}
+
+void CV::rect( Vector2 p1, Vector2 p2 )
+{
+   glBegin(GL_LINE_LOOP);
+      glVertex2d(p1.x, p1.y);
+      glVertex2d(p1.x, p2.y);
+      glVertex2d(p2.x, p2.y);
+      glVertex2d(p2.x, p1.y);
    glEnd();
 }
 
@@ -140,6 +158,25 @@ void CV::text(float x, float y, const char *t)
     }
 }
 
+void CV::text(Vector2 pos, const char *t)
+{
+    text(pos.x, pos.y, t);
+}
+
+void CV::text(Vector2 pos, int valor)
+{
+    char buffer[50];
+    sprintf(buffer, "%d", valor);
+    text(pos.x, pos.y, buffer);
+}
+
+void CV::text(Vector2 pos, float valor)
+{
+    char buffer[50];
+    sprintf(buffer, "%.2f", valor);
+    text(pos.x, pos.y, buffer);
+}
+
 void CV::clear(float r, float g, float b)
 {
    glClearColor( r, g, b, 1 );
@@ -160,6 +197,11 @@ void CV::circle( float x, float y, float radius, int div )
    glEnd();
 }
 
+void CV::circle( Vector2 pos, float radius, int div )
+{
+   circle(pos.x, pos.y, radius, div);
+}
+
 void CV::circleFill( float x, float y, float radius, int div )
 {
    float ang = 0, x1, y1;
@@ -173,6 +215,11 @@ void CV::circleFill( float x, float y, float radius, int div )
          ang+=inc;
       }
    glEnd();
+}
+
+void CV::circleFill( Vector2 pos, float radius, int div )
+{
+   circleFill(pos.x, pos.y, radius, div);
 }
 
 //coordenada de offset para desenho de objetos.

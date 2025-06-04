@@ -73,3 +73,89 @@
 	<stdio.h>
 	<stdlib.h>
 
+1749061241 source:c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
+	"Aplicacao3D.h"
+	"gl_canvas2d.h"
+	<stdio.h>
+
+1749063175 c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.h
+	"CurvaBezier.h"
+	"Objeto3D.h"
+	"Vector2.h"
+
+1749061241 c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\curvabezier.h
+	"Vector2.h"
+	<vector>
+
+1749061241 c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\vector2.h
+	<math.h>
+	<stdio.h>
+
+1749063175 c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.h
+	"Vector3.h"
+	"Vector2.h"
+	"CurvaBezier.h"
+	<vector>
+
+1749061241 c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\vector3.h
+	<math.h>
+	<stdio.h>
+
+1749061241 c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\gl_canvas2d.h
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	<string.h>
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	"Vector2.h"
+
+1632060799 c:\users\gabriel\desktop\cg\demos\include\gl\glut.h
+	"freeglut_std.h"
+
+1632060797 c:\users\gabriel\desktop\cg\demos\include\gl\freeglut_std.h
+	<windows.h>
+	<EGL/egl.h>
+	<GLES/gl.h>
+	<GLES2/gl2.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1632060794 c:\users\gabriel\desktop\cg\demos\include\gl\freeglut_ext.h
+	<stdarg.h>
+
+1749061241 source:c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\curvabezier.cpp
+	"CurvaBezier.h"
+	"gl_canvas2d.h"
+	<math.h>
+
+1749061241 source:c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\gl_canvas2d.cpp
+	"gl_canvas2d.h"
+	<GL/glut.h>
+
+1749063175 source:c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\main.cpp
+	<GL/glut.h>
+	<GL/freeglut_ext.h>
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+	"gl_canvas2d.h"
+	"Aplicacao3D.h"
+
+1749061241 source:c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.cpp
+	"Objeto3D.h"
+	"gl_canvas2d.h"
+	<math.h>
+
+1749060024 source:c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\relogio.cpp
+	"Relogio.h"
+	<math.h>
+	<stdio.h>
+	<stdlib.h>
+
+1749060024 c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\relogio.h
+	"gl_canvas2d.h"
+

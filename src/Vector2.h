@@ -1,6 +1,8 @@
 #ifndef __VECTOR_2_H__
 #define __VECTOR_2_H__
 
+#include <math.h>
+#include <stdio.h>
 
 class Vector2
 {

@@ -24,11 +24,9 @@ public:
     static void point(Vector2 pos); //coordeandas do ponto
 
     static void line( float x1, float y1, float x2, float y2 ); //coordenadas da linha x1, y1, x2, y2
-    static void line( Vector2 p1, Vector2 p2 ); //coordenadas da linha (p1, p2)
-
-    //desenha um retangulo alinhado nos eixos x e y
+    static void line( Vector2 p1, Vector2 p2 ); //coordenadas da linha (p1, p2)    //desenha um retangulo alinhado nos eixos x e y
     static void rect( float x1, float y1, float x2, float y2 ); //coordenadas do retangulo x1, y1, x2, y2
-    static void rect( Vector2 p1, Vector2 p2 ); //coordenadas do retangulo (p1, p2) - TO DO
+    static void rect( Vector2 p1, Vector2 p2 ); //coordenadas do retangulo (p1, p2)
 
     static void rectFill( float x1, float y1, float x2, float y2 ); //coordenadas do retangulo x1, y1, x2, y2
     static void rectFill( Vector2 p1, Vector2 p2 ); //coordenadas do retangulo (p1, p2)
