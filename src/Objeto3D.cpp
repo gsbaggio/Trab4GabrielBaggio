@@ -12,13 +12,13 @@ Objeto3D::Objeto3D(CurvaBezier* curva)
     numDivisoesRotacao = 20;
     mostrarNormais = false;
     modoWireframe = true;
-    projecaoPerspectiva = false;
-    distanciaCamera = 300.0f;
+    projecaoPerspectiva = false; // Já está em ortográfica
+    distanciaCamera = 800.0f; // Aumentado de 300 para 800 - câmera mais distante
     
     // Inicializar transformações
     rotacaoX = rotacaoY = rotacaoZ = 0.0f;
     translacaoX = translacaoY = translacaoZ = 0.0f;
-    escala = 1.0f;
+    escala = 0.3f; // Reduzido de 1.0 para 0.3 - objeto menor inicialmente
 }
 
 void Objeto3D::definirDivisoesRotacao(int divisoes)
@@ -65,7 +65,8 @@ void Objeto3D::resetarTransformacoes()
 {
     rotacaoX = rotacaoY = rotacaoZ = 0.0f;
     translacaoX = translacaoY = translacaoZ = 0.0f;
-    escala = 1.0f;
+    escala = 0.3f; // Mesma escala inicial
+    distanciaCamera = 800.0f; // Mesma distância inicial
 }
 
 void Objeto3D::definirDistanciaCamera(float distancia)

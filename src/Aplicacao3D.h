@@ -14,10 +14,10 @@ private:
     // Controles de interface
     bool arrastandoPonto;
     int pontoSendoArrastado;
-    
-    // Controles de visualização 3D
+      // Controles de visualização 3D
     bool rotacionandoObjeto;
     Vector2 ultimaPosicaoMouse;
+    Vector2 posicaoAtualMouse; // Para armazenar posição atual do mouse
     
     // Dimensões da tela
     int larguraTela, alturaTela;

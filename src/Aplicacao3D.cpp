@@ -10,6 +10,7 @@ Aplicacao3D::Aplicacao3D()
     larguraTela = 1080;
     alturaTela = 720;
     metadeLargura = larguraTela / 2;
+    posicaoAtualMouse = Vector2(metadeLargura / 2, alturaTela / 2); // Inicializar no centro
     
     // Criar única curva
     curva = new CurvaBezier();
@@ -32,7 +33,7 @@ Aplicacao3D::~Aplicacao3D()
 void Aplicacao3D::inicializar()
 {
     // Configurações iniciais do objeto 3D
-    objeto->definirProjecaoPerspectiva(true);
+    objeto->definirProjecaoPerspectiva(false); // Iniciar em ortográfica
     objeto->definirDivisoesRotacao(20);
 }
 
@@ -142,37 +143,34 @@ void Aplicacao3D::desenharInterface()
     // Borda da área de visualização 3D
     CV::color(0.5f, 0.5f, 0.5f);
     CV::rect(metadeLargura + 10, 50, larguraTela - 10, alturaTela - 50);
-    
-    // Instruções do lado esquerdo
+      // Instruções do lado esquerdo
     CV::color(1, 1, 1);
-    CV::text(15, alturaTela - 150, "A: Adicionar ponto");
-    CV::text(15, alturaTela - 130, "D: Deletar ultimo ponto");
-    CV::text(15, alturaTela - 110, "Clique/Arraste: Mover ponto");
+    CV::text(15, 70, "A: Adicionar ponto");
+    CV::text(15, 90, "D: Deletar ultimo ponto (min. 2)");
+    CV::text(15, 110, "Clique/Arraste: Mover ponto");
     
     // Informações da curva
     if (curva) {
         char buffer[100];
         sprintf(buffer, "Pontos de controle: %d", curva->getNumPontosControle());
-        CV::text(15, alturaTela - 80, buffer);
-        sprintf(buffer, "Pontos da curva: %d", curva->getNumPontosCurva());
-        CV::text(15, alturaTela - 60, buffer);
+        CV::text(15, 130, buffer);
     }
     
     // Instruções do lado direito
     CV::color(1, 1, 1);
-    CV::text(metadeLargura + 15, alturaTela - 150, "Mouse: Rotacionar objeto");
-    CV::text(metadeLargura + 15, alturaTela - 130, "I/O: Zoom in/out");
-    CV::text(metadeLargura + 15, alturaTela - 110, "N: Mostrar normais");
-    CV::text(metadeLargura + 15, alturaTela - 90, "P: Alternar projecao");
+    CV::text(metadeLargura + 15, 150, "Mouse: Rotacionar objeto");
+    CV::text(metadeLargura + 15, 130, "I/O: Zoom in/out");
+    CV::text(metadeLargura + 15, 110, "N: Mostrar normais");
+    CV::text(metadeLargura + 15, 90, "P: Alternar projecao");
     
     // Informações do objeto 3D
     if (objeto) {
         char buffer[100];
         sprintf(buffer, "Triangulos: %d", objeto->getNumTriangulos());
-        CV::text(metadeLargura + 15, alturaTela - 60, buffer);
+        CV::text(metadeLargura + 15, 170, buffer);
         
         CV::color(0, 1, 1);
-        CV::text(metadeLargura + 15, alturaTela - 40, objeto->getProjecaoPerspectiva() ? "Perspectiva" : "Ortografica");
+        CV::text(metadeLargura + 15, 70, objeto->getProjecaoPerspectiva() ? "Perspectiva" : "Ortografica");
     }
     
     // Mensagem se não há pontos suficientes
@@ -187,6 +185,7 @@ void Aplicacao3D::desenharInterface()
 void Aplicacao3D::onMouseClick(int button, int state, int x, int y)
 {
     Vector2 posicaoMouse(x, y);
+    posicaoAtualMouse = posicaoMouse; // Atualizar posição atual
     
     if (state == 0) { // Mouse pressionado
         if (mouseNaEdicao(x)) {
@@ -216,6 +215,7 @@ void Aplicacao3D::onMouseClick(int button, int state, int x, int y)
 void Aplicacao3D::onMouseMove(int x, int y)
 {
     Vector2 posicaoMouse(x, y);
+    posicaoAtualMouse = posicaoMouse; // Sempre atualizar posição atual
     
     if (mouseNaEdicao(x) && arrastandoPonto) {
         // Arrastar ponto de controle no lado esquerdo
@@ -234,20 +234,21 @@ void Aplicacao3D::onMouseMove(int x, int y)
 
 void Aplicacao3D::onKeyboard(int key)
 {
-    switch (key) {
-        case 'a':
+    switch (key) {        case 'a':
         case 'A':
-            // Adicionar ponto de controle no centro da área de edição
-            if (curva) {
-                Vector2 novoPonto(metadeLargura / 2, alturaTela / 2);
-                curva->adicionarPontoControle(novoPonto);
+            // Adicionar ponto de controle na posição do mouse (apenas se estiver na área de edição)
+            if (curva && mouseNaEdicao(posicaoAtualMouse.x)) {
+                // Verificar se a posição está dentro da área de edição de curva
+                if (posicaoAtualMouse.x >= 10 && posicaoAtualMouse.x <= metadeLargura - 10 &&
+                    posicaoAtualMouse.y >= 50 && posicaoAtualMouse.y <= alturaTela - 50) {
+                    curva->adicionarPontoControle(posicaoAtualMouse);
+                }
             }
             break;
-            
-        case 'd':
+              case 'd':
         case 'D':
-            // Deletar último ponto de controle
-            if (curva && curva->getNumPontosControle() > 0) {
+            // Deletar último ponto de controle (apenas se tiver mais de 2 pontos)
+            if (curva && curva->getNumPontosControle() > 2) {
                 curva->removerPontoControle(curva->getNumPontosControle() - 1);
             }
             break;
@@ -283,12 +284,36 @@ void Aplicacao3D::onKeyboard(int key)
                 objeto->definirProjecaoPerspectiva(!objeto->getProjecaoPerspectiva());
             }
             break;
-            
-        case 'r':
+              case 'r':
         case 'R':
             // Resetar rotação e escala do objeto
             if (objeto) {
                 objeto->resetarTransformacoes();
+            }
+            break;
+            
+        // Setas do teclado para translação
+        case 200: // Seta para cima
+            if (objeto) {
+                objeto->transladar(0, -10, 0); // Move para cima (Y negativo)
+            }
+            break;
+            
+        case 201: // Seta para baixo
+            if (objeto) {
+                objeto->transladar(0, 10, 0); // Move para baixo (Y positivo)
+            }
+            break;
+            
+        case 202: // Seta para esquerda
+            if (objeto) {
+                objeto->transladar(-10, 0, 0); // Move para esquerda (X negativo)
+            }
+            break;
+            
+        case 203: // Seta para direita
+            if (objeto) {
+                objeto->transladar(10, 0, 0); // Move para direita (X positivo)
             }
             break;
             

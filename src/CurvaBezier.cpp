@@ -4,7 +4,7 @@
 
 CurvaBezier::CurvaBezier()
 {
-    numPontosCurva = 50; // Valor padrão
+    numPontosCurva = 100; // Aumentado para 100 pontos
 }
 
 int CurvaBezier::binomial(int n, int k)
