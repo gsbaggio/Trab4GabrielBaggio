@@ -40,11 +40,11 @@
 1193164156 c:\users\samsung\desktop\cg\demos\1_cv_canvasglut\src\relogio.h
 	"gl_canvas2d.h"
 
-1740581235 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\gl_canvas2d.cpp
+1749130447 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1740581020 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\gl_canvas2d.h
+1749130447 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -53,16 +53,18 @@
 	<GL/freeglut_ext.h>
 	"Vector2.h"
 
-1589217858 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\vector2.h
+1749130447 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\vector2.h
+	<math.h>
+	<stdio.h>
 
-1748951783 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\main.cpp
+1749130447 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
 	<stdio.h>
 	<stdlib.h>
 	"gl_canvas2d.h"
-	"Relogio.h"
+	"Aplicacao3D.h"
 
 1193164156 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\relogio.h
 	"gl_canvas2d.h"
@@ -158,4 +160,38 @@
 
 1749060024 c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\relogio.h
 	"gl_canvas2d.h"
+
+1749130447 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.h
+	"CurvaBezier.h"
+	"Objeto3D.h"
+	"Vector2.h"
+
+1749130447 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\curvabezier.h
+	"Vector2.h"
+	<vector>
+
+1749130447 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.h
+	"Vector3.h"
+	"Vector2.h"
+	"CurvaBezier.h"
+	<vector>
+
+1749130447 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\vector3.h
+	<math.h>
+	<stdio.h>
+
+1749130447 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
+	"Aplicacao3D.h"
+	"gl_canvas2d.h"
+	<stdio.h>
+
+1749130447 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\curvabezier.cpp
+	"CurvaBezier.h"
+	"gl_canvas2d.h"
+	<math.h>
+
+1749130447 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.cpp
+	"Objeto3D.h"
+	"gl_canvas2d.h"
+	<math.h>
 

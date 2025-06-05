@@ -38,17 +38,26 @@
 		</Compiler>
 		<Linker>
 			<Add library="../lib/libfreeglut32.a" />
-			<Add library="../lib/libopengl32.a"/>
-			<Add library="../lib/libglu32.a"/>
+			<Add library="../lib/libopengl32.a" />
+			<Add library="../lib/libglu32.a" />
 		</Linker>
+		<Unit filename="src/Aplicacao3D.cpp" />
+		<Unit filename="src/Aplicacao3D.h" />
 		<Unit filename="src/Bola.h" />
 		<Unit filename="src/Botao.h" />
-		<Unit filename="src/Relogio.cpp" />
-		<Unit filename="src/Relogio.h" />
+		<Unit filename="src/CurvaBezier.cpp" />
+		<Unit filename="src/CurvaBezier.h" />
+		<Unit filename="src/Objeto3D.cpp" />
+		<Unit filename="src/Objeto3D.h" />
 		<Unit filename="src/Vector2.h" />
+		<Unit filename="src/Vector3.h" />
 		<Unit filename="src/gl_canvas2d.cpp" />
 		<Unit filename="src/gl_canvas2d.h" />
 		<Unit filename="src/main.cpp" />
-
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
