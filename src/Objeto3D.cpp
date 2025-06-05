@@ -18,11 +18,10 @@ Objeto3D::Objeto3D(CurvaBezier* curva)
     
     // Initialize rendering system
     framebuffer = nullptr;
-    rasterizer = new Rasterizer();
-      // Setup default lighting - light slightly to the left in front
-    rasterizer->definirLuz(Vector3(-0.5f, 0.0f, 1.0f), Vector3(1.0f, 1.0f, 1.0f));
+    rasterizer = new Rasterizer();    // Setup default lighting - light to the left and behind
+    rasterizer->definirLuz(Vector3(-0.5f, 0.0f, -1.0f), Vector3(1.0f, 1.0f, 1.0f));
     rasterizer->definirCorAmbiente(Vector3(0.2f, 0.2f, 0.2f));
-    rasterizer->definirCorMaterial(Vector3(0.8f, 0.6f, 0.4f));
+    rasterizer->definirCorMaterial(Vector3(0.4f, 0.6f, 0.8f)); // Blue material
     
     // Inicializar transformações
     rotacaoX = rotacaoY = rotacaoZ = 0.0f;

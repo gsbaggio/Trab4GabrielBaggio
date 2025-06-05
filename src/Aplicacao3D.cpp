@@ -189,11 +189,9 @@ void Aplicacao3D::desenharInterface()
     CV::text(metadeLargura + 15, 150, "Mouse: Rotacionar objeto");
     CV::text(metadeLargura + 15, 130, "I/O: Zoom in/out");
     CV::text(metadeLargura + 15, 110, "N: Mostrar normais");
-    CV::text(metadeLargura + 15, 90, "P: Alternar projecao");
-    CV::color(1, 1, 0);
+    CV::text(metadeLargura + 15, 90, "P: Alternar projecao");    CV::color(1, 1, 0);
     CV::text(metadeLargura + 15, 290, "W: Wireframe/Filled");
-    CV::text(metadeLargura + 15, 310, "L: Luz esq.frente/dir.tras");
-    CV::text(metadeLargura + 15, 330, "C: Cor do material");
+    CV::text(metadeLargura + 15, 310, "L: Luz esq.atras/dir.frente");
     CV::color(1, 1, 1);
     
     // Informações do objeto 3D
@@ -330,40 +328,21 @@ void Aplicacao3D::onKeyboard(int key)
             if (objeto) {
                 objeto->definirModoWireframe(!objeto->getModoWireframe());
             }
-            break;
-              case 'l':
+            break;        case 'l':
         case 'L':
             // Alternar direção da luz
             if (objeto) {
-                static bool luzEsquerdaFrente = true;
-                if (luzEsquerdaFrente) {
-                    // Luz atrás na parte da direita
-                    objeto->definirLuz(Vector3(0.5f, 0.0f, -1.0f), Vector3(1.0f, 1.0f, 1.0f));
+                static bool luzEsquerdaAtras = true;
+                if (luzEsquerdaAtras) {
+                    // Luz à direita na frente
+                    objeto->definirLuz(Vector3(0.5f, 0.0f, 1.0f), Vector3(1.0f, 1.0f, 1.0f));
                 } else {
-                    // Luz levemente à esquerda na frente
-                    objeto->definirLuz(Vector3(-0.5f, 0.0f, 1.0f), Vector3(1.0f, 1.0f, 1.0f));
+                    // Luz à esquerda atrás
+                    objeto->definirLuz(Vector3(-0.5f, 0.0f, -1.0f), Vector3(1.0f, 1.0f, 1.0f));
                 }
-                luzEsquerdaFrente = !luzEsquerdaFrente;
-            }
-            break;
+                luzEsquerdaAtras = !luzEsquerdaAtras;
+            }            break;
             
-        case 'c':
-        case 'C':
-            // Alternar cores do material
-            if (objeto) {
-                static int corAtual = 0;
-                Vector3 cores[] = {
-                    Vector3(0.8f, 0.6f, 0.4f), // Laranja
-                    Vector3(0.6f, 0.8f, 0.4f), // Verde
-                    Vector3(0.4f, 0.6f, 0.8f), // Azul
-                    Vector3(0.8f, 0.4f, 0.6f), // Rosa
-                    Vector3(0.7f, 0.7f, 0.7f)  // Cinza
-                };
-                objeto->definirCorMaterial(cores[corAtual]);
-                corAtual = (corAtual + 1) % 5;
-            }
-            break;
-
         case 'e':
         case 'E':
             // Aumentar incremento de sweep translacional
