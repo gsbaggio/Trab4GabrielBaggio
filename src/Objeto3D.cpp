@@ -10,6 +10,7 @@ Objeto3D::Objeto3D(CurvaBezier* curva)
 {
     curvaBezier = curva;
     numDivisoesRotacao = 10; // Ajustado para 10 divisões iniciais
+    sweepTranslacional = 0.0f; // Sem incremento vertical inicial
     mostrarNormais = false;
     modoWireframe = true;
     projecaoPerspectiva = false; // Já está em ortográfica
@@ -24,6 +25,12 @@ Objeto3D::Objeto3D(CurvaBezier* curva)
 void Objeto3D::definirDivisoesRotacao(int divisoes)
 {
     numDivisoesRotacao = divisoes;
+    atualizarObjeto();
+}
+
+void Objeto3D::definirSweepTranslacional(float incremento)
+{
+    sweepTranslacional = incremento;
     atualizarObjeto();
 }
 
@@ -148,11 +155,13 @@ void Objeto3D::gerarSweepRotacional()
     if (pontosCurva.size() < 2) return;
       // Gerar vértices através de rotação
     float anguloIncremento = 2.0f * PI / numDivisoesRotacao;
-    
-    for (int i = 0; i <= numDivisoesRotacao; i++) {
+      for (int i = 0; i <= numDivisoesRotacao; i++) {
         float angulo = i * anguloIncremento;
         float cosA = cos(angulo);
         float sinA = sin(angulo);
+          // Calcular deslocamento vertical para sweep translacional
+        // Valores positivos fazem crescer para cima, negativos para baixo
+        float deslocamentoY = -i * sweepTranslacional;
         
         for (int j = 0; j < pontosCurva.size(); j++) {
             Vector2& p = pontosCurva[j];
@@ -160,7 +169,7 @@ void Objeto3D::gerarSweepRotacional()
             
             Vector3 vertice;
             vertice.x = raio * cosA;
-            vertice.y = p.y;
+            vertice.y = p.y + deslocamentoY; // Adicionar incremento vertical
             vertice.z = raio * sinA;
             
             vertices.push_back(vertice);

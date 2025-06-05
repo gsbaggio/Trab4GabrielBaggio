@@ -31,8 +31,8 @@ private:
     std::vector<Vector3> vertices;
     std::vector<Triangulo> triangulos;
     CurvaBezier* curvaBezier;
-    
-    int numDivisoesRotacao;
+      int numDivisoesRotacao;
+    float sweepTranslacional; // Incremento Y por divisão
     bool mostrarNormais;
     bool modoWireframe;
     
@@ -77,10 +77,14 @@ public:
     int getNumTriangulos() { return triangulos.size(); }
     int getNumVertices() { return vertices.size(); }
     int getNumDivisoesRotacao() { return numDivisoesRotacao; }
+    float getSweepTranslacional() { return sweepTranslacional; }
     bool getMostrarNormais() { return mostrarNormais; }
     bool getModoWireframe() { return modoWireframe; }
     bool getProjecaoPerspectiva() { return projecaoPerspectiva; }
     float getEscala() { return escala; }
+    
+    // Setters para sweep translacional
+    void definirSweepTranslacional(float incremento);
 };
 
 #endif

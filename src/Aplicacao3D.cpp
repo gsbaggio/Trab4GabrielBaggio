@@ -159,23 +159,25 @@ void Aplicacao3D::desenharInterface()
         CV::text(15, 170, buffer);
     }    // Instruções do lado direito
     CV::color(1, 1, 1);
-    CV::text(metadeLargura + 15, 190, "J/K: Diminuir/Aumentar divisoes de rotacao");
+    CV::text(metadeLargura + 15, 210, "J/K: Diminuir/Aumentar divisoes de rotacao");
+    CV::text(metadeLargura + 15, 190, "Q/E: Sweep p/ baixo/cima");
     CV::text(metadeLargura + 15, 170, "Setas: Transladar objeto");
     CV::text(metadeLargura + 15, 150, "Mouse: Rotacionar objeto");
     CV::text(metadeLargura + 15, 130, "I/O: Zoom in/out");
     CV::text(metadeLargura + 15, 110, "N: Mostrar normais");
     CV::text(metadeLargura + 15, 90, "P: Alternar projecao");
-
-    
     // Informações do objeto 3D
     if (objeto) {
         char buffer[100];
         sprintf(buffer, "Triangulos: %d", objeto->getNumTriangulos());
-        CV::text(metadeLargura + 15, 210, buffer);
+        CV::text(metadeLargura + 15, 230, buffer);
         
         
         sprintf(buffer, "Divisoes rotacao: %d", objeto->getNumDivisoesRotacao());
-        CV::text(metadeLargura + 15, 230, buffer);
+        CV::text(metadeLargura + 15, 250, buffer);
+        
+        sprintf(buffer, "Sweep translacional: %.1f", objeto->getSweepTranslacional());
+        CV::text(metadeLargura + 15, 270, buffer);
         
         CV::color(0, 1, 1);
         CV::text(metadeLargura + 15, 70, objeto->getProjecaoPerspectiva() ? "Perspectiva" : "Ortografica");
@@ -291,14 +293,32 @@ void Aplicacao3D::onKeyboard(int key)
             if (objeto) {
                 objeto->definirProjecaoPerspectiva(!objeto->getProjecaoPerspectiva());
             }
-            break;        case 'r':
-        case 'R':
+            break;        case 'e':
+        case 'E':
+            // Aumentar incremento de sweep translacional
+            if (objeto) {
+                float incrementoAtual = objeto->getSweepTranslacional();
+                objeto->definirSweepTranslacional(incrementoAtual + 5.0f);
+            }
+            break;
+            
+        case 'q':
+        case 'Q':
+            // Diminuir incremento de sweep translacional
+            if (objeto) {
+                float incrementoAtual = objeto->getSweepTranslacional();
+                objeto->definirSweepTranslacional(incrementoAtual - 5.0f);
+            }            break;
+            
+        case 't':
+        case 'T':
             // Resetar rotação e escala do objeto
             if (objeto) {
                 objeto->resetarTransformacoes();
             }
             break;
-              case 'j':
+            
+        case 'j':
         case 'J':
             if (mouseNaEdicao(posicaoAtualMouse.x)) {
                 // Lado esquerdo - diminuir pontos da curva (mínimo 10)

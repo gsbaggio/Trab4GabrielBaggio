@@ -73,7 +73,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1749086267 source:c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
+1749090796 source:c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
 	"Aplicacao3D.h"
 	"gl_canvas2d.h"
 	<stdio.h>
@@ -91,7 +91,7 @@
 	<math.h>
 	<stdio.h>
 
-1749073553 c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.h
+1749090796 c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.h
 	"Vector3.h"
 	"Vector2.h"
 	"CurvaBezier.h"
@@ -145,7 +145,7 @@
 	"gl_canvas2d.h"
 	"Aplicacao3D.h"
 
-1749086108 source:c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.cpp
+1749091719 source:c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.cpp
 	"Objeto3D.h"
 	"gl_canvas2d.h"
 	<math.h>
