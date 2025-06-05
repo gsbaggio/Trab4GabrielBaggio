@@ -4,7 +4,7 @@
 
 CurvaBezier::CurvaBezier()
 {
-    numPontosCurva = 50; // Reduzido de 100 para 50 pontos
+    numPontosCurva = 20; // Ajustado para 20 pontos iniciais
 }
 
 int CurvaBezier::binomial(int n, int k)
@@ -81,8 +81,8 @@ void CurvaBezier::gerarCurva()
     
     if (pontosControle.size() < 2) return;
     
-    for (int i = 0; i <= numPontosCurva; i++) {
-        float t = (float)i / (float)numPontosCurva;
+    for (int i = 0; i < numPontosCurva; i++) {
+        float t = (float)i / (float)(numPontosCurva - 1);
         Vector2 ponto = calcularPontoBezier(t);
         pontosCurva.push_back(ponto);
     }

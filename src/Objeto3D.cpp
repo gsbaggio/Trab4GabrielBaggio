@@ -9,7 +9,7 @@
 Objeto3D::Objeto3D(CurvaBezier* curva)
 {
     curvaBezier = curva;
-    numDivisoesRotacao = 20;
+    numDivisoesRotacao = 10; // Ajustado para 10 divisões iniciais
     mostrarNormais = false;
     modoWireframe = true;
     projecaoPerspectiva = false; // Já está em ortográfica

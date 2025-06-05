@@ -34,7 +34,7 @@ void Aplicacao3D::inicializar()
 {
     // Configurações iniciais do objeto 3D
     objeto->definirProjecaoPerspectiva(false); // Iniciar em ortográfica
-    objeto->definirDivisoesRotacao(20);
+    objeto->definirDivisoesRotacao(10); // Ajustado para 10 divisões iniciais
 }
 
 void Aplicacao3D::definirDimensoesTela(int largura, int altura)
@@ -159,12 +159,13 @@ void Aplicacao3D::desenharInterface()
         CV::text(15, 170, buffer);
     }    // Instruções do lado direito
     CV::color(1, 1, 1);
-    CV::text(metadeLargura + 15, 190, "Setas: Transladar objeto");
-    CV::text(metadeLargura + 15, 170, "Mouse: Rotacionar objeto");
-    CV::text(metadeLargura + 15, 150, "I/O: Zoom in/out");
-    CV::text(metadeLargura + 15, 130, "N: Mostrar normais");
-    CV::text(metadeLargura + 15, 110, "P: Alternar projecao");
-    CV::text(metadeLargura + 15, 90, "J/K: Diminuir/Aumentar divisoes de rotacao");
+    CV::text(metadeLargura + 15, 190, "J/K: Diminuir/Aumentar divisoes de rotacao");
+    CV::text(metadeLargura + 15, 170, "Setas: Transladar objeto");
+    CV::text(metadeLargura + 15, 150, "Mouse: Rotacionar objeto");
+    CV::text(metadeLargura + 15, 130, "I/O: Zoom in/out");
+    CV::text(metadeLargura + 15, 110, "N: Mostrar normais");
+    CV::text(metadeLargura + 15, 90, "P: Alternar projecao");
+
     
     // Informações do objeto 3D
     if (objeto) {
@@ -172,11 +173,9 @@ void Aplicacao3D::desenharInterface()
         sprintf(buffer, "Triangulos: %d", objeto->getNumTriangulos());
         CV::text(metadeLargura + 15, 210, buffer);
         
-        sprintf(buffer, "Vertices: %d", objeto->getNumVertices());
-        CV::text(metadeLargura + 15, 230, buffer);
         
         sprintf(buffer, "Divisoes rotacao: %d", objeto->getNumDivisoesRotacao());
-        CV::text(metadeLargura + 15, 250, buffer);
+        CV::text(metadeLargura + 15, 230, buffer);
         
         CV::color(0, 1, 1);
         CV::text(metadeLargura + 15, 70, objeto->getProjecaoPerspectiva() ? "Perspectiva" : "Ortografica");
