@@ -145,7 +145,7 @@ void Aplicacao3D::desenharInterface()
     CV::rect(metadeLargura + 10, 50, larguraTela - 10, alturaTela - 50);    // Instruções do lado esquerdo
     CV::color(1, 1, 1);
     CV::text(15, 70, "A: Adicionar ponto");
-    CV::text(15, 90, "D: Deletar ultimo ponto (min. 2)");
+    CV::text(15, 90, "D: Deletar ultimo ponto (min. 4)");
     CV::text(15, 110, "Clique/Arraste: Mover ponto");
     CV::text(15, 130, "J/K: Diminuir/Aumentar pontos curva");
     
@@ -254,11 +254,10 @@ void Aplicacao3D::onKeyboard(int key)
                     curva->adicionarPontoControle(posicaoAtualMouse);
                 }
             }
-            break;
-              case 'd':
+            break;        case 'd':
         case 'D':
-            // Deletar último ponto de controle (apenas se tiver mais de 2 pontos)
-            if (curva && curva->getNumPontosControle() > 2) {
+            // Deletar último ponto de controle (apenas se tiver mais de 4 pontos)
+            if (curva && curva->getNumPontosControle() > 4) {
                 curva->removerPontoControle(curva->getNumPontosControle() - 1);
             }
             break;
