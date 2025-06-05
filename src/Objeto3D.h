@@ -69,6 +69,7 @@ private:
     Vector2 projetarPonto(Vector3 ponto);
     Vector2 projetarPontoFramebuffer(Vector3 ponto);
     Vector3 transformarPonto(Vector3 ponto);
+    Vector3 transformarNormal(Vector3 normal);
     
 public:
     Objeto3D(CurvaBezier* curva);

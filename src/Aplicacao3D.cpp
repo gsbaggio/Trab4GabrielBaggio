@@ -192,7 +192,7 @@ void Aplicacao3D::desenharInterface()
     CV::text(metadeLargura + 15, 90, "P: Alternar projecao");
     CV::color(1, 1, 0);
     CV::text(metadeLargura + 15, 290, "W: Wireframe/Filled");
-    CV::text(metadeLargura + 15, 310, "L: Luz frente/tras");
+    CV::text(metadeLargura + 15, 310, "L: Luz esq.frente/dir.tras");
     CV::text(metadeLargura + 15, 330, "C: Cor do material");
     CV::color(1, 1, 1);
     
@@ -331,18 +331,19 @@ void Aplicacao3D::onKeyboard(int key)
                 objeto->definirModoWireframe(!objeto->getModoWireframe());
             }
             break;
-            
-        case 'l':
+              case 'l':
         case 'L':
-            // Alternar direção da luz (frente/trás)
+            // Alternar direção da luz
             if (objeto) {
-                static bool luzFrente = true;
-                if (luzFrente) {
-                    objeto->definirLuz(Vector3(0.0f, 0.0f, -1.0f), Vector3(1.0f, 1.0f, 1.0f));
+                static bool luzEsquerdaFrente = true;
+                if (luzEsquerdaFrente) {
+                    // Luz atrás na parte da direita
+                    objeto->definirLuz(Vector3(0.5f, 0.0f, -1.0f), Vector3(1.0f, 1.0f, 1.0f));
                 } else {
-                    objeto->definirLuz(Vector3(0.0f, 0.0f, 1.0f), Vector3(1.0f, 1.0f, 1.0f));
+                    // Luz levemente à esquerda na frente
+                    objeto->definirLuz(Vector3(-0.5f, 0.0f, 1.0f), Vector3(1.0f, 1.0f, 1.0f));
                 }
-                luzFrente = !luzFrente;
+                luzEsquerdaFrente = !luzEsquerdaFrente;
             }
             break;
             

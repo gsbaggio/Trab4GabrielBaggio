@@ -19,9 +19,8 @@ Objeto3D::Objeto3D(CurvaBezier* curva)
     // Initialize rendering system
     framebuffer = nullptr;
     rasterizer = new Rasterizer();
-    
-    // Setup default lighting
-    rasterizer->definirLuz(Vector3(0.0f, 0.0f, 1.0f), Vector3(1.0f, 1.0f, 1.0f));
+      // Setup default lighting - light slightly to the left in front
+    rasterizer->definirLuz(Vector3(-0.5f, 0.0f, 1.0f), Vector3(1.0f, 1.0f, 1.0f));
     rasterizer->definirCorAmbiente(Vector3(0.2f, 0.2f, 0.2f));
     rasterizer->definirCorMaterial(Vector3(0.8f, 0.6f, 0.4f));
     
@@ -213,6 +212,47 @@ Vector2 Objeto3D::projetarPontoFramebuffer(Vector3 ponto)
     return resultado;
 }
 
+Vector3 Objeto3D::transformarNormal(Vector3 normal)
+{
+    Vector3 n = normal;
+    
+    // Apply only rotations to normals (no scale or translation)
+    // Rotation in X
+    if (rotacaoX != 0) {
+        float cosX = cos(rotacaoX);
+        float sinX = sin(rotacaoX);
+        float y = n.y * cosX - n.z * sinX;
+        float z = n.y * sinX + n.z * cosX;
+        n.y = y;
+        n.z = z;
+    }
+    
+    // Rotation in Y
+    if (rotacaoY != 0) {
+        float cosY = cos(rotacaoY);
+        float sinY = sin(rotacaoY);
+        float x = n.x * cosY + n.z * sinY;
+        float z = -n.x * sinY + n.z * cosY;
+        n.x = x;
+        n.z = z;
+    }
+    
+    // Rotation in Z
+    if (rotacaoZ != 0) {
+        float cosZ = cos(rotacaoZ);
+        float sinZ = sin(rotacaoZ);
+        float x = n.x * cosZ - n.y * sinZ;
+        float y = n.x * sinZ + n.y * cosZ;
+        n.x = x;
+        n.y = y;
+    }
+    
+    // Normalize the normal after transformation
+    n.normalize();
+    
+    return n;
+}
+
 void Objeto3D::gerarSweepRotacional()
 {
     vertices.clear();
@@ -375,20 +415,24 @@ void Objeto3D::desenhar()
         // Rasterize all triangles
         for (int i = 0; i < triangulos.size(); i++) {
             Triangulo& tri = triangulos[i];
-            
-            // Transform vertices to 3D world space
+              // Transform vertices to 3D world space
             Vector3 v1_world = transformarPonto(tri.v1);
             Vector3 v2_world = transformarPonto(tri.v2);
             Vector3 v3_world = transformarPonto(tri.v3);
+            
+            // Transform normals to world space for proper lighting
+            Vector3 n1_world = transformarNormal(tri.n1);
+            Vector3 n2_world = transformarNormal(tri.n2);
+            Vector3 n3_world = transformarNormal(tri.n3);
               // Project to 2D screen space using framebuffer coordinates
             Vector2 p1_2d = projetarPontoFramebuffer(tri.v1);
             Vector2 p2_2d = projetarPontoFramebuffer(tri.v2);
             Vector2 p3_2d = projetarPontoFramebuffer(tri.v3);
             
-            // Create raster vertices with 2D positions, 3D positions, and normals
-            VerticeRaster v1_raster(p1_2d, v1_world, tri.n1);
-            VerticeRaster v2_raster(p2_2d, v2_world, tri.n2);
-            VerticeRaster v3_raster(p3_2d, v3_world, tri.n3);
+            // Create raster vertices with 2D positions, 3D positions, and world-space normals
+            VerticeRaster v1_raster(p1_2d, v1_world, n1_world);
+            VerticeRaster v2_raster(p2_2d, v2_world, n2_world);
+            VerticeRaster v3_raster(p3_2d, v3_world, n3_world);
               // Rasterize triangle with lighting
             rasterizer->rasterizarTriangulo(*framebuffer, v1_raster, v2_raster, v3_raster);        }
         

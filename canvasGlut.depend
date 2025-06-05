@@ -170,7 +170,7 @@
 	"Vector2.h"
 	<vector>
 
-1749143625 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.h
+1749144099 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.h
 	"Vector3.h"
 	"Vector2.h"
 	"CurvaBezier.h"
@@ -182,7 +182,7 @@
 	<math.h>
 	<stdio.h>
 
-1749142909 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
+1749144099 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
 	"Aplicacao3D.h"
 	"gl_canvas2d.h"
 	<stdio.h>
@@ -192,7 +192,7 @@
 	"gl_canvas2d.h"
 	<math.h>
 
-1749141963 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.cpp
+1749144203 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.cpp
 	"Objeto3D.h"
 	"gl_canvas2d.h"
 	<math.h>
