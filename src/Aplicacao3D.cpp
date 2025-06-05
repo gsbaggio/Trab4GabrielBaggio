@@ -42,6 +42,11 @@ void Aplicacao3D::definirDimensoesTela(int largura, int altura)
     larguraTela = largura;
     alturaTela = altura;
     metadeLargura = largura / 2;
+    
+    // Initialize framebuffer for 3D rendering area (right half of screen)
+    int largura3D = metadeLargura - 20; // Account for borders
+    int altura3D = alturaTela - 100;    // Account for top/bottom borders
+    objeto->inicializarFramebuffer(largura3D, altura3D);
 }
 
 bool Aplicacao3D::mouseNaEdicao(int x)
@@ -117,17 +122,36 @@ void Aplicacao3D::desenharEdicaoCurva()
 
 void Aplicacao3D::desenharVisualizacao3D()
 {
-    // Desenhar objeto 3D no centro da área direita (sem limitações de área ainda)
-    CV::translate(metadeLargura + (metadeLargura / 2), alturaTela / 2);
-    
     if (objeto && curva->getNumPontosControle() >= 2) {
-        objeto->desenhar();
-        if (objeto->getMostrarNormais()) {
-            objeto->desenharNormais();
+        if (objeto->getModoWireframe()) {
+            // Wireframe rendering with translation
+            CV::translate(metadeLargura + (metadeLargura / 2), alturaTela / 2);
+            objeto->desenhar();
+            if (objeto->getMostrarNormais()) {
+                objeto->desenharNormais();
+            }
+            CV::translate(0, 0); // Reset da translação
+        } else {
+            // Filled rendering - draw framebuffer directly to screen area
+            // First draw the framebuffer with proper positioning
+            if (objeto->getFramebuffer()) {
+                int largura3D = objeto->getFramebuffer()->getLargura();
+                int altura3D = objeto->getFramebuffer()->getAltura();
+                
+                // Calculate position to center framebuffer in 3D area
+                int offsetX = metadeLargura + 10 + (metadeLargura - 20 - largura3D) / 2;
+                int offsetY = 50 + (alturaTela - 100 - altura3D) / 2;
+                
+                // Render to framebuffer (this will populate the framebuffer with the scene)
+                CV::translate(metadeLargura + (metadeLargura / 2), alturaTela / 2);
+                objeto->desenhar(); // This will render to framebuffer but not draw it yet
+                CV::translate(0, 0); // Reset translation
+                
+                // Now draw the framebuffer at the correct screen position
+                objeto->getFramebuffer()->desenharNaTela(offsetX, offsetY);
+            }
         }
     }
-    
-    CV::translate(0, 0); // Reset da translação
 }
 
 void Aplicacao3D::desenharInterface()
@@ -166,6 +190,12 @@ void Aplicacao3D::desenharInterface()
     CV::text(metadeLargura + 15, 130, "I/O: Zoom in/out");
     CV::text(metadeLargura + 15, 110, "N: Mostrar normais");
     CV::text(metadeLargura + 15, 90, "P: Alternar projecao");
+    CV::color(1, 1, 0);
+    CV::text(metadeLargura + 15, 290, "W: Wireframe/Filled");
+    CV::text(metadeLargura + 15, 310, "L: Luz frente/tras");
+    CV::text(metadeLargura + 15, 330, "C: Cor do material");
+    CV::color(1, 1, 1);
+    
     // Informações do objeto 3D
     if (objeto) {
         char buffer[100];
@@ -292,7 +322,48 @@ void Aplicacao3D::onKeyboard(int key)
             if (objeto) {
                 objeto->definirProjecaoPerspectiva(!objeto->getProjecaoPerspectiva());
             }
-            break;        case 'e':
+            break;
+            
+        case 'w':
+        case 'W':
+            // Alternar modo wireframe/filled
+            if (objeto) {
+                objeto->definirModoWireframe(!objeto->getModoWireframe());
+            }
+            break;
+            
+        case 'l':
+        case 'L':
+            // Alternar direção da luz (frente/trás)
+            if (objeto) {
+                static bool luzFrente = true;
+                if (luzFrente) {
+                    objeto->definirLuz(Vector3(0.0f, 0.0f, -1.0f), Vector3(1.0f, 1.0f, 1.0f));
+                } else {
+                    objeto->definirLuz(Vector3(0.0f, 0.0f, 1.0f), Vector3(1.0f, 1.0f, 1.0f));
+                }
+                luzFrente = !luzFrente;
+            }
+            break;
+            
+        case 'c':
+        case 'C':
+            // Alternar cores do material
+            if (objeto) {
+                static int corAtual = 0;
+                Vector3 cores[] = {
+                    Vector3(0.8f, 0.6f, 0.4f), // Laranja
+                    Vector3(0.6f, 0.8f, 0.4f), // Verde
+                    Vector3(0.4f, 0.6f, 0.8f), // Azul
+                    Vector3(0.8f, 0.4f, 0.6f), // Rosa
+                    Vector3(0.7f, 0.7f, 0.7f)  // Cinza
+                };
+                objeto->definirCorMaterial(cores[corAtual]);
+                corAtual = (corAtual + 1) % 5;
+            }
+            break;
+
+        case 'e':
         case 'E':
             // Aumentar incremento de sweep translacional
             if (objeto) {

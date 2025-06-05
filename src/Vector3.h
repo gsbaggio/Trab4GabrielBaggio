@@ -26,9 +26,7 @@ public:
        x = _x;
        y = _y;
        z = _z;
-   }
-
-   float length()
+   }   float length() const
    {
        return sqrt(x*x + y*y + z*z);
    }
@@ -48,38 +46,32 @@ public:
        x /= norm;
        y /= norm;
        z /= norm;
-   }
-
-   Vector3 operator - (const Vector3& v)
+   }   Vector3 operator - (const Vector3& v) const
    {
         Vector3 aux( x - v.x, y - v.y, z - v.z);
         return( aux );
    }
 
-   Vector3 operator + (const Vector3& v)
+   Vector3 operator + (const Vector3& v) const
    {
        Vector3 aux( x + v.x, y + v.y, z + v.z);
        return( aux );
    }
 
-   Vector3 operator * (float scalar)
+   Vector3 operator * (float scalar) const
    {
        Vector3 aux( x * scalar, y * scalar, z * scalar);
        return( aux );
-   }
-
-   // Produto vetorial (cross product)
-   Vector3 cross(const Vector3& v)
+   }// Produto vetorial (cross product)
+   Vector3 cross(const Vector3& v) const
    {
        Vector3 result;
        result.x = y * v.z - z * v.y;
        result.y = z * v.x - x * v.z;
        result.z = x * v.y - y * v.x;
        return result;
-   }
-
-   // Produto escalar (dot product)
-   float dot(const Vector3& v)
+   }// Produto escalar (dot product)
+   float dot(const Vector3& v) const
    {
        return x * v.x + y * v.y + z * v.z;
    }
