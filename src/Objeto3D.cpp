@@ -259,6 +259,14 @@ void Objeto3D::gerarSweepRotacional()
     
     std::vector<Vector2>& pontosCurva = curvaBezier->getPontosCurva();
     if (pontosCurva.size() < 2) return;
+    
+    // Calcular centro da área de edição para converter coordenadas de tela para coordenadas de mundo 3D
+    // Estes valores devem corresponder aos mesmos usados em Aplicacao3D.cpp
+    int larguraTela = 1080;
+    int alturaTela = 720;
+    int metadeLargura = larguraTela / 2;
+    int centroX = (10 + metadeLargura - 10) / 2;  // Centro horizontal da área de edição
+    int centroY = (50 + alturaTela - 50) / 2;     // Centro vertical da área de edição
       // Gerar vértices através de rotação
     float anguloIncremento = 2.0f * PI / numDivisoesRotacao;
       for (int i = 0; i <= numDivisoesRotacao; i++) {
@@ -271,11 +279,17 @@ void Objeto3D::gerarSweepRotacional()
         
         for (int j = 0; j < pontosCurva.size(); j++) {
             Vector2& p = pontosCurva[j];
-            float raio = fabs(p.x); // Usar fabs ao invés de abs para float
+            
+            // Converter coordenadas de tela (sistema centralizado) para coordenadas de mundo 3D
+            float xMundo = p.x - centroX;   // Deslocar origem do centro para obter distância do eixo Y
+            float yMundo = -(p.y - centroY); // Inverter Y e deslocar origem (sistema de coordenadas padrão)
+            
+            // Para rotação 3D, o raio é a distância absoluta do eixo Y (agora origem está centralizada)
+            float raio = fabs(xMundo);
             
             Vector3 vertice;
             vertice.x = raio * cosA;
-            vertice.y = p.y + deslocamentoY; // Adicionar incremento vertical
+            vertice.y = yMundo + deslocamentoY; // Usar coordenada Y transformada + incremento vertical
             vertice.z = raio * sinA;
             
             vertices.push_back(vertice);

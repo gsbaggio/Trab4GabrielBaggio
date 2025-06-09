@@ -15,13 +15,17 @@ Aplicacao3D::Aplicacao3D()
     // Criar única curva
     curva = new CurvaBezier();
     objeto = new Objeto3D(curva);
+      // Calcular centro da área de edição para sistema de coordenadas centralizado
+    int centroX = (10 + metadeLargura - 10) / 2;  // Centro horizontal da área de edição
+    int centroY = (50 + alturaTela - 50) / 2;     // Centro vertical da área de edição
     
-    // Adicionar alguns pontos de exemplo
-    curva->adicionarPontoControle(Vector2(100, 200));  // Base
-    curva->adicionarPontoControle(Vector2(150, 300));  // Corpo inferior
-    curva->adicionarPontoControle(Vector2(120, 400));  // Corpo médio
-    curva->adicionarPontoControle(Vector2(80, 500));   // Gargalo
-    curva->adicionarPontoControle(Vector2(100, 600));  // Topo
+    // Adicionar alguns pontos de exemplo com coordenadas centralizadas
+    // Pontos à direita do eixo Y, alguns acima e outros abaixo do eixo X
+    curva->adicionarPontoControle(Vector2(centroX + 100, centroY + 200));   // Base (abaixo e à direita)
+    curva->adicionarPontoControle(Vector2(centroX + 160, centroY + 120));   // Corpo inferior (abaixo e à direita)
+    curva->adicionarPontoControle(Vector2(centroX + 120, centroY - 60));   // Corpo médio (acima e à direita)
+    curva->adicionarPontoControle(Vector2(centroX + 80, centroY - 160));   // Gargalo (acima e à direita)
+    curva->adicionarPontoControle(Vector2(centroX + 100, centroY - 300));  // Topo (acima e à direita)
 }
 
 Aplicacao3D::~Aplicacao3D()
@@ -112,6 +116,46 @@ void Aplicacao3D::desenharEdicaoCurva()
     CV::color(0.5f, 0.5f, 0.5f);
     CV::rect(10, 50, metadeLargura - 10, alturaTela - 50);
     
+    // Calcular centro da área de edição para o sistema de coordenadas
+    int centroX = (10 + metadeLargura - 10) / 2;  // Centro horizontal da área de edição
+    int centroY = (50 + alturaTela - 50) / 2;     // Centro vertical da área de edição
+    
+    // Desenhar eixos cartesianos
+    CV::color(0.7f, 0.7f, 0.7f);  // Cinza claro para os eixos
+    
+    // Eixo X (horizontal) - atravessa toda a área de edição
+    CV::line(10, centroY, metadeLargura - 10, centroY);
+    
+    // Eixo Y (vertical) - atravessa toda a área de edição  
+    CV::line(centroX, 50, centroX, alturaTela - 50);
+    
+    // Desenhar marcações nos eixos (opcional)
+    CV::color(0.6f, 0.6f, 0.6f);  // Cinza um pouco mais escuro para marcações
+    
+    // Marcações no eixo X
+    for (int i = -3; i <= 3; i++) {
+        if (i != 0) { // Não desenhar marcação no centro
+            int x = centroX + i * 40;
+            if (x > 10 && x < metadeLargura - 10) {
+                CV::line(x, centroY - 3, x, centroY + 3);
+            }
+        }
+    }
+    
+    // Marcações no eixo Y
+    for (int i = -3; i <= 3; i++) {
+        if (i != 0) { // Não desenhar marcação no centro
+            int y = centroY + i * 40;
+            if (y > 50 && y < alturaTela - 50) {
+                CV::line(centroX - 3, y, centroX + 3, y);
+            }
+        }
+    }
+    
+    // Indicar origem com um pequeno círculo
+    CV::color(1.0f, 1.0f, 1.0f);  // Branco para destacar a origem
+    CV::circleFill(centroX, centroY, 3, 8);
+    
     // Desenhar curva e pontos de controle
     if (curva) {
         curva->desenharPoligonControle();
@@ -172,43 +216,44 @@ void Aplicacao3D::desenharInterface()
     CV::text(15, 90, "D: Deletar ultimo ponto (min. 4)");
     CV::text(15, 110, "Clique/Arraste: Mover ponto");
     CV::text(15, 130, "J/K: Diminuir/Aumentar pontos curva");
-    
-    // Informações da curva
+    CV::text(15, 150, "Origem no centro da area");
+    CV::text(15, 170, "Eixo X (horizontal) e Y (vertical)");
+      // Informações da curva
     if (curva) {
         char buffer[100];
         sprintf(buffer, "Pontos de controle: %d", curva->getNumPontosControle());
-        CV::text(15, 150, buffer);
+        CV::text(15, 190, buffer);
         
         sprintf(buffer, "Pontos de amostragem: %d", curva->getNumPontosCurva());
-        CV::text(15, 170, buffer);
+        CV::text(15, 210, buffer);
     }    // Instruções do lado direito
     CV::color(1, 1, 1);
-    CV::text(metadeLargura + 15, 210, "J/K: Diminuir/Aumentar divisoes de rotacao");
-    CV::text(metadeLargura + 15, 190, "Q/E: Sweep p/ baixo/cima");
-    CV::text(metadeLargura + 15, 170, "Setas: Transladar objeto");
-    CV::text(metadeLargura + 15, 150, "Mouse: Rotacionar objeto");
-    CV::text(metadeLargura + 15, 130, "I/O: Zoom in/out");
-    CV::text(metadeLargura + 15, 110, "N: Mostrar normais");
-    CV::text(metadeLargura + 15, 90, "P: Alternar projecao");    CV::color(1, 1, 0);
-    CV::text(metadeLargura + 15, 290, "W: Wireframe/Filled");
-    CV::text(metadeLargura + 15, 310, "L: Luz esq.atras/dir.frente");
+    CV::text(metadeLargura + 15, 230, "J/K: Diminuir/Aumentar divisoes de rotacao");
+    CV::text(metadeLargura + 15, 210, "Q/E: Sweep p/ baixo/cima");
+    CV::text(metadeLargura + 15, 190, "Setas: Transladar objeto");
+    CV::text(metadeLargura + 15, 170, "Mouse: Rotacionar objeto");
+    CV::text(metadeLargura + 15, 150, "I/O: Zoom in/out");
+    CV::text(metadeLargura + 15, 130, "N: Mostrar normais");
+    CV::text(metadeLargura + 15, 110, "P: Alternar projecao");    CV::color(1, 1, 0);
+    CV::text(metadeLargura + 15, 310, "W: Wireframe/Filled");
+    CV::text(metadeLargura + 15, 330, "L: Luz esq.atras/dir.frente");
     CV::color(1, 1, 1);
     
     // Informações do objeto 3D
     if (objeto) {
         char buffer[100];
         sprintf(buffer, "Triangulos: %d", objeto->getNumTriangulos());
-        CV::text(metadeLargura + 15, 230, buffer);
+        CV::text(metadeLargura + 15, 250, buffer);
         
         
         sprintf(buffer, "Divisoes rotacao: %d", objeto->getNumDivisoesRotacao());
-        CV::text(metadeLargura + 15, 250, buffer);
-        
-        sprintf(buffer, "Sweep translacional: %.1f", objeto->getSweepTranslacional());
         CV::text(metadeLargura + 15, 270, buffer);
         
+        sprintf(buffer, "Sweep translacional: %.1f", objeto->getSweepTranslacional());
+        CV::text(metadeLargura + 15, 290, buffer);
+        
         CV::color(0, 1, 1);
-        CV::text(metadeLargura + 15, 70, objeto->getProjecaoPerspectiva() ? "Perspectiva" : "Ortografica");
+        CV::text(metadeLargura + 15, 90, objeto->getProjecaoPerspectiva() ? "Perspectiva" : "Ortografica");
     }
     
     // Mensagem se não há pontos suficientes

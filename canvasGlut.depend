@@ -57,7 +57,7 @@
 	<math.h>
 	<stdio.h>
 
-1749130447 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\main.cpp
+1749485927 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -182,7 +182,7 @@
 	<math.h>
 	<stdio.h>
 
-1749154105 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
+1749486286 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
 	"Aplicacao3D.h"
 	"gl_canvas2d.h"
 	<stdio.h>
@@ -192,7 +192,7 @@
 	"gl_canvas2d.h"
 	<math.h>
 
-1749154105 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.cpp
+1749486597 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.cpp
 	"Objeto3D.h"
 	"gl_canvas2d.h"
 	<math.h>
