@@ -69,7 +69,7 @@ void Framebuffer::desenharNaTela(int offsetX, int offsetY)
             // define a cor do pixel no canvas
             CV::color(p.r, p.g, p.b);
             // desenha o pixel na posição com offset aplicado
-            CV::point(offsetX + x, offsetY + y);
+            CV::rectFill(offsetX + x, offsetY + y, offsetX + x + 1, offsetY + y + 1);
         }
     }
 }
