@@ -44,8 +44,21 @@ alterada com a tecla 'L'.
 */
 
 /*
-Manual de uso:
 
+Manual de uso:
+A: Adiciona ponto
+D: Deleta ultimo ponto
+Clique/Arraste (dentro do quadrado dos pontos): move o ponto selecionado
+J/K (lado esquerdo da tela): Diminuir/Aumentar os pontos de amostragem da curva
+P: Altera entre projecao ortografica ou perspectiva
+N: Exibe vetores normais das faces dos triangulos
+I/O: Zoom in/Zoom out da camera
+Clique/Arraste (lado direito da tela): rotaciona o objeto
+Setas: Transladam o objeto
+Q/E: Aumenta o deslocamento Y no sweep translacional
+J/K (lado direito da tela): Diminuir/Aumentar a quantidade de rotações no sweep
+W: Altera entre wireframe e iluminacao por pixel
+L: Altera a direção da luz
 
 */
 

@@ -57,7 +57,7 @@
 	<math.h>
 	<stdio.h>
 
-1749496443 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\main.cpp
+1749498150 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -178,21 +178,21 @@
 	"Rasterizer.h"
 	<vector>
 
-1749493679 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\vector3.h
+1749497234 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\vector3.h
 	<math.h>
 	<stdio.h>
 
-1749491525 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
+1749497129 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
 	"Aplicacao3D.h"
 	"gl_canvas2d.h"
 	<stdio.h>
 
-1749496993 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\curvabezier.cpp
+1749497184 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\curvabezier.cpp
 	"CurvaBezier.h"
 	"gl_canvas2d.h"
 	<math.h>
 
-1749494179 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.cpp
+1749497218 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.cpp
 	"Objeto3D.h"
 	"gl_canvas2d.h"
 	<math.h>
