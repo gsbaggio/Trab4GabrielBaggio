@@ -40,11 +40,11 @@
 1193164156 c:\users\samsung\desktop\cg\demos\1_cv_canvasglut\src\relogio.h
 	"gl_canvas2d.h"
 
-1749130447 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\gl_canvas2d.cpp
+1749494281 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\gl_canvas2d.cpp
 	"gl_canvas2d.h"
 	<GL/glut.h>
 
-1749130447 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\gl_canvas2d.h
+1749494230 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\gl_canvas2d.h
 	<stdio.h>
 	<stdlib.h>
 	<math.h>
@@ -53,11 +53,11 @@
 	<GL/freeglut_ext.h>
 	"Vector2.h"
 
-1749130447 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\vector2.h
+1749493707 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\vector2.h
 	<math.h>
 	<stdio.h>
 
-1749485927 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\main.cpp
+1749496443 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -161,16 +161,16 @@
 1749060024 c:\users\gabriel\desktop\cg\demos\trab4gabrielbaggio\src\relogio.h
 	"gl_canvas2d.h"
 
-1749130447 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.h
+1749495029 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.h
 	"CurvaBezier.h"
 	"Objeto3D.h"
 	"Vector2.h"
 
-1749130447 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\curvabezier.h
+1749494495 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\curvabezier.h
 	"Vector2.h"
 	<vector>
 
-1749144099 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.h
+1749493933 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.h
 	"Vector3.h"
 	"Vector2.h"
 	"CurvaBezier.h"
@@ -178,42 +178,42 @@
 	"Rasterizer.h"
 	<vector>
 
-1749142085 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\vector3.h
+1749493679 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\vector3.h
 	<math.h>
 	<stdio.h>
 
-1749487687 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
+1749491525 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
 	"Aplicacao3D.h"
 	"gl_canvas2d.h"
 	<stdio.h>
 
-1749130447 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\curvabezier.cpp
+1749496993 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\curvabezier.cpp
 	"CurvaBezier.h"
 	"gl_canvas2d.h"
 	<math.h>
 
-1749487554 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.cpp
+1749494179 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.cpp
 	"Objeto3D.h"
 	"gl_canvas2d.h"
 	<math.h>
 
-1749141321 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\framebuffer.h
+1749495171 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\framebuffer.h
 	"Vector2.h"
 	"Vector3.h"
 	<vector>
 	<limits>
 
-1749141321 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\rasterizer.h
+1749495378 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\rasterizer.h
 	"Vector2.h"
 	"Vector3.h"
 	"Framebuffer.h"
 
-1749141321 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\framebuffer.cpp
+1749495282 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\framebuffer.cpp
 	"Framebuffer.h"
 	"gl_canvas2d.h"
 	<algorithm>
 
-1749487554 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\rasterizer.cpp
+1749495593 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\rasterizer.cpp
 	"Rasterizer.h"
 	<algorithm>
 	<cmath>

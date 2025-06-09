@@ -1,3 +1,5 @@
+// arquivo de cabeçalho para a classe Rasterizer
+
 #ifndef __RASTERIZER_H__
 #define __RASTERIZER_H__
 
@@ -5,21 +7,23 @@
 #include "Vector3.h"
 #include "Framebuffer.h"
 
+// estrutura que representa um vértice para rasterização
 struct VerticeRaster {
-    Vector2 pos2D;
-    Vector3 pos3D;
-    Vector3 normal;
+    Vector2 pos2D;    // posição 2D na tela (x, y)
+    Vector3 pos3D;    // posição 3D original no mundo
+    Vector3 normal;   // vetor normal do vértice
     
     VerticeRaster() {}
     VerticeRaster(Vector2 _pos2D, Vector3 _pos3D, Vector3 _normal) 
         : pos2D(_pos2D), pos3D(_pos3D), normal(_normal) {}
 };
 
+// estrutura que representa uma linha horizontal (scanline) para rasterização
 struct Scanline {
-    int y;
-    float xInicio, xFim;
-    float zInicio, zFim;
-    Vector3 normalInicio, normalFim;
+    int y;                              // coordenada y da scanline
+    float xInicio, xFim;                // coordenadas x inicial e final
+    float zInicio, zFim;                // valores z inicial e final (para z-buffer)
+    Vector3 normalInicio, normalFim;    // normais inicial e final (para interpolação)
     
     Scanline(int _y, float _xInicio, float _xFim, float _zInicio, float _zFim, 
              Vector3 _normalInicio, Vector3 _normalFim)
@@ -30,30 +34,31 @@ struct Scanline {
 class Rasterizer
 {
 private:
-    // Iluminação
-    Vector3 luzDirecao;
-    Vector3 corLuz;
-    Vector3 corAmbiente;
-    Vector3 corMaterial;
+    // parâmetros de iluminação
+    Vector3 luzDirecao;    // direção da luz direcional
+    Vector3 corLuz;        // cor/intensidade da luz
+    Vector3 corAmbiente;   // cor da luz ambiente
+    Vector3 corMaterial;   // cor base do material
     
-    // Interpolar atributos entre dois pontos
+    // interpolar atributos entre dois pontos usando parâmetro t (0.0 a 1.0)
     VerticeRaster interpolar(const VerticeRaster& v1, const VerticeRaster& v2, float t);
     
-    // Calcular cor com iluminação por pixel
+    // calcular cor final usando modelo de iluminação por pixel
     Vector3 calcularIluminacao(const Vector3& normal, const Vector3& posicao3D);
     
-    // Desenhar scanline
+    // desenhar uma scanline horizontal no framebuffer com interpolação de atributos
     void desenharScanline(Framebuffer& framebuffer, const Scanline& scanline);
     
 public:
+    // construtor padrão - inicializa parâmetros de iluminação
     Rasterizer();
     
-    // Configurar iluminação
-    void definirLuz(Vector3 direcao, Vector3 cor);
-    void definirCorAmbiente(Vector3 cor);
-    void definirCorMaterial(Vector3 cor);
+    // métodos para configurar parâmetros de iluminação
+    void definirLuz(Vector3 direcao, Vector3 cor);        // definir luz direcional
+    void definirCorAmbiente(Vector3 cor);                 // definir iluminação ambiente
+    void definirCorMaterial(Vector3 cor);                 // definir cor do material
     
-    // Rasterizar triângulo com z-buffer e iluminação por pixel
+    // rasterizar triângulo completo com z-buffer e iluminação por pixel
     void rasterizarTriangulo(Framebuffer& framebuffer, 
                            const VerticeRaster& v1, 
                            const VerticeRaster& v2, 

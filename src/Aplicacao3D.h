@@ -1,3 +1,5 @@
+// arquivo cabeçalho para a aplicação 3D
+
 #ifndef __APLICACAO_3D_H__
 #define __APLICACAO_3D_H__
 
@@ -11,24 +13,24 @@ private:
     CurvaBezier* curva;
     Objeto3D* objeto;
     
-    // Controles de interface
+    // controles de interface
     bool arrastandoPonto;
     int pontoSendoArrastado;
-      // Controles de visualização 3D
+      // controles de visualização 3D
     bool rotacionandoObjeto;
     Vector2 ultimaPosicaoMouse;
-    Vector2 posicaoAtualMouse; // Para armazenar posição atual do mouse
+    Vector2 posicaoAtualMouse; // para armazenar posição atual do mouse
     
-    // Dimensões da tela
+    // dimensões da tela
     int larguraTela, alturaTela;
-    int metadeLargura; // Divisão da tela
+    int metadeLargura; // divisão da tela
     
-    // Interface gráfica
+    // interface gráfica
     void desenharEdicaoCurva();
     void desenharVisualizacao3D();
     void desenharInterface();
     
-    // Verificar em qual metade da tela o mouse está
+    // verificar em qual metade da tela o mouse está
     bool mouseNaEdicao(int x);
     bool mouseNaVisualizacao(int x);
     
@@ -41,7 +43,7 @@ public:
     void desenhar();
     void definirDimensoesTela(int largura, int altura);
     
-    // Eventos
+    // eventos
     void onMouseClick(int button, int state, int x, int y);
     void onMouseMove(int x, int y);
     void onKeyboard(int key);

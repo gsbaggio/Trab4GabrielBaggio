@@ -1,3 +1,7 @@
+/*
+Aruivo de cabeçalho para a classe Objeto3D
+*/
+
 #ifndef __OBJETO_3D_H__
 #define __OBJETO_3D_H__
 
@@ -11,14 +15,14 @@
 struct Triangulo {
     Vector3 v1, v2, v3;
     Vector3 normal;
-    Vector3 n1, n2, n3; // Per-vertex normals for smooth shading
+    Vector3 n1, n2, n3; // normais por vértice para sombreamento suave
     
     Triangulo(Vector3 _v1, Vector3 _v2, Vector3 _v3) {
         v1 = _v1;
         v2 = _v2;
         v3 = _v3;
         calcularNormal();
-        // Initialize vertex normals to face normal
+        // inicializar normais dos vértices com a normal da face
         n1 = n2 = n3 = normal;
     }
     
@@ -41,31 +45,31 @@ private:
     std::vector<Triangulo> triangulos;
     CurvaBezier* curvaBezier;
     
-    // Rendering system
+    // sistema de renderização
     Framebuffer* framebuffer;
     Rasterizer* rasterizer;
     
     int numDivisoesRotacao;
-    float sweepTranslacional; // Incremento Y por divisão
+    float sweepTranslacional; // incremento Y por divisão
     bool mostrarNormais;
     bool modoWireframe;
     
-    // Variáveis de transformação
+    // variáveis de transformação
     float rotacaoX, rotacaoY, rotacaoZ;
     float translacaoX, translacaoY, translacaoZ;
     float escala;
     
-    // Modo de visualização
+    // modo de visualização
     bool projecaoPerspectiva;
     float distanciaCamera;
     
-    // Gerar objeto 3D através de sweep rotacional
+    // gerar objeto 3D através de sweep rotacional
     void gerarSweepRotacional();
     
-    // Calculate smooth vertex normals
+    // calcular normais suaves dos vértices
     void calcularNormaisVertices();
     
-    // Transformações 3D para 2D
+    // transformações 3D para 2D
     Vector2 projetarPonto(Vector3 ponto);
     Vector2 projetarPontoFramebuffer(Vector3 ponto);
     Vector3 transformarPonto(Vector3 ponto);
@@ -75,31 +79,31 @@ public:
     Objeto3D(CurvaBezier* curva);
     ~Objeto3D();
     
-    // Configurações
+    // configurações
     void definirDivisoesRotacao(int divisoes);
     void mostrarVetoresNormais(bool mostrar);
     void definirModoWireframe(bool wireframe);
     void definirProjecaoPerspectiva(bool perspectiva);
     
-    // Rendering configuration
+    // configuração de renderização
     void inicializarFramebuffer(int largura, int altura);
     void definirLuz(Vector3 direcao, Vector3 cor);
     void definirCorAmbiente(Vector3 cor);
     void definirCorMaterial(Vector3 cor);
     
-    // Transformações
+    // transformações
     void rotacionar(float deltaX, float deltaY, float deltaZ);
     void transladar(float deltaX, float deltaY, float deltaZ);
     void definirEscala(float novaEscala);
     void resetarTransformacoes();
     
-    // Camera
+    // camera
     void definirDistanciaCamera(float distancia);
     
-    // Geração e renderização
+    // geração e renderização
     void atualizarObjeto();
     void desenhar();
-    void desenharNormais();    // Getters
+    void desenharNormais();    // getters
     int getNumTriangulos() { return triangulos.size(); }
     int getNumVertices() { return vertices.size(); }
     int getNumDivisoesRotacao() { return numDivisoesRotacao; }
@@ -110,7 +114,7 @@ public:
     float getEscala() { return escala; }
     Framebuffer* getFramebuffer() { return framebuffer; }
     
-    // Setters para sweep translacional
+    // setters para sweep translacional
     void definirSweepTranslacional(float incremento);
 };
 

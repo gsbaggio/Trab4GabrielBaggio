@@ -1,3 +1,7 @@
+/*
+Arquivo padrão da canvas para representar um vetor bidimensional, além de suas operações básicas.
+*/
+
 #ifndef __VECTOR_2_H__
 #define __VECTOR_2_H__
 
@@ -32,7 +36,6 @@ public:
 
        if(norm==0.0)
        {
-          printf("\n\nNormalize::Divisao por zero");
           x = 1;
           y = 1;
           return;

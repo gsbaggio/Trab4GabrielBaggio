@@ -1,18 +1,3 @@
-/**
-*   Programa para ilustrar os elementos mais basicos do OpenGL e Glut.
-*   - Apresenta os principais recursos do sistema de Janelas GLUT
-*
-*   Autor: Cesar Tadeu Pozzer
-*   UFSM - 2020
-*
-*   pozzer@inf.ufsm.br
-*   pozzer3@gmail.com
-*
-* Referencias GLUT: http://www.opengl.org/documentation/specs/glut/
-*                   http://www.opengl.org/documentation/specs/glut/spec3/node1.html
-**/
-
-
 #include "gl_canvas2d.h"
 #include <GL/glut.h>
 
@@ -187,7 +172,7 @@ void CV::circle( float x, float y, float radius, int div )
    float ang = 0, x1, y1;
    float inc = PI_2/div;
    glBegin(GL_LINE_LOOP);
-      for(int lado = 1; lado <= div; lado++) //GL_LINE_LOOP desenha um poligono fechado. Liga automaticamente o primeiro e ultimio vertices.
+      for(int lado = 1; lado <= div; lado++) 
       {
          x1 = (cos(ang)*radius);
          y1 = (sin(ang)*radius);
@@ -207,7 +192,7 @@ void CV::circleFill( float x, float y, float radius, int div )
    float ang = 0, x1, y1;
    float inc = PI_2/div;
    glBegin(GL_POLYGON);
-      for(int lado = 1; lado <= div; lado++) //GL_POLYGON desenha um poligono CONVEXO preenchido.
+      for(int lado = 1; lado <= div; lado++) 
       {
          x1 = (cos(ang)*radius);
          y1 = (sin(ang)*radius);

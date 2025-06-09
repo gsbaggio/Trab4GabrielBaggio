@@ -1,3 +1,11 @@
+/*
+Arquivo auxiliar para representar um vetor tridimensional, alem de suas operações básicas.
+Esse arquivo é utilizado por outras classes, como Objeto3D, para manipular pontos e vetores
+no espaço tridimensional. Contém operações como adição, subtração, multiplicação por escalar,
+normalização, produto escalar e produto vetorial.
+*/
+
+
 #ifndef __VECTOR_3_H__
 #define __VECTOR_3_H__
 
@@ -37,7 +45,6 @@ public:
 
        if(norm == 0.0)
        {
-          printf("\n\nNormalize::Divisao por zero");
           x = 1;
           y = 1;
           z = 1;
@@ -62,7 +69,7 @@ public:
    {
        Vector3 aux( x * scalar, y * scalar, z * scalar);
        return( aux );
-   }// Produto vetorial (cross product)
+   }// produto vetorial (cross product)
    Vector3 cross(const Vector3& v) const
    {
        Vector3 result;
@@ -70,7 +77,7 @@ public:
        result.y = z * v.x - x * v.z;
        result.z = x * v.y - y * v.x;
        return result;
-   }// Produto escalar (dot product)
+   }// produto escalar (dot product)
    float dot(const Vector3& v) const
    {
        return x * v.x + y * v.y + z * v.z;

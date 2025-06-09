@@ -1,3 +1,5 @@
+// arquivo cabeçalho para o curvaBezier
+
 #ifndef __CURVA_BEZIER_H__
 #define __CURVA_BEZIER_H__
 
@@ -7,43 +9,44 @@
 class CurvaBezier
 {
 private:
-    std::vector<Vector2> pontosControle;
-    std::vector<Vector2> pontosCurva;
-    int numPontosCurva;
+    std::vector<Vector2> pontosControle;    // pontos que definem a forma da curva
+    std::vector<Vector2> pontosCurva;       // pontos calculados da curva final
+    int numPontosCurva;                     // quantidade de pontos para discretizar a curva
 
-    // Calcula coeficiente binomial
+    // calcula coeficiente binomial
     int binomial(int n, int k);
     
-    // Calcula ponto na curva de Bezier usando a fórmula de Bernstein
+    // calcula ponto na curva de Bézier usando a fórmula de Bernstein
     Vector2 calcularPontoBezier(float t);
 
 public:
+    // construtor padrão
     CurvaBezier();
     
-    // Gerenciamento dos pontos de controle
+    // gerenciamento dos pontos de controle
     void adicionarPontoControle(Vector2 ponto);
     void removerPontoControle(int index);
     void moverPontoControle(int index, Vector2 novaPosicao);
     void limparPontosControle();
     
-    // Configuração da curva
+    // configuração da curva
     void definirNumeropontos(int numPontos);
     
-    // Geração da curva
+    // geração da curva
     void gerarCurva();
     
-    // Getters
+    // getters para acesso aos dados
     std::vector<Vector2>& getPontosControle() { return pontosControle; }
     std::vector<Vector2>& getPontosCurva() { return pontosCurva; }
     int getNumPontosControle() { return pontosControle.size(); }
     int getNumPontosCurva() { return numPontosCurva; }
     
-    // Desenho
+    // métodos de desenho
     void desenharPontosControle();
     void desenharCurva();
     void desenharPoligonControle();
     
-    // Verificação se um ponto está próximo de um ponto de controle
+    // verificação se um ponto está próximo de um ponto de controle
     int pontoProximoControle(Vector2 ponto, float raio = 10.0f);
 };
 

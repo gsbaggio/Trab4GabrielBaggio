@@ -51,9 +51,9 @@ public:
 
     //desenha texto na coordenada (x,y)
     static void text(float x, float y, const char *t);
-    static void text(Vector2 pos, const char *t);  //varias funcoes ainda nao tem implementacao. Faca como exercicio
-    static void text(Vector2 pos, int valor);      //varias funcoes ainda nao tem implementacao. Faca como exercicio
-    static void text(Vector2 pos, float valor);    //varias funcoes ainda nao tem implementacao. Faca como exercicio
+    static void text(Vector2 pos, const char *t);  
+    static void text(Vector2 pos, int valor);      
+    static void text(Vector2 pos, float valor);    
 
     //coordenada de offset para desenho de objetos.
     static void translate(float x, float y);

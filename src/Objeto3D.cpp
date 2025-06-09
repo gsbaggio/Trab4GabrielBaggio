@@ -1,3 +1,9 @@
+/* 
+implementação da classe Objeto3D que gera e renderiza objetos 3D através de sweep rotacional
+suporta tanto renderização wireframe quanto rasterização com z-buffer e iluminação per-pixel
+permite transformações 3D como rotação, translação, escala e diferentes tipos de projeção
+*/
+
 #include "Objeto3D.h"
 #include "gl_canvas2d.h"
 #include <math.h>
@@ -9,24 +15,26 @@
 Objeto3D::Objeto3D(CurvaBezier* curva)
 {
     curvaBezier = curva;
-    numDivisoesRotacao = 10; // Ajustado para 10 divisões iniciais
-    sweepTranslacional = 0.0f; // Sem incremento vertical inicial
+    numDivisoesRotacao = 10; // ajustado para 10 divisões iniciais
+    sweepTranslacional = 0.0f; // sem incremento vertical inicial
     mostrarNormais = false;
     modoWireframe = true;
-    projecaoPerspectiva = false; // Já está em ortográfica
-    distanciaCamera = 800.0f; // Aumentado de 300 para 800 - câmera mais distante
+    projecaoPerspectiva = false; // já está em ortográfica
+    distanciaCamera = 800.0f; // aumentado de 300 para 800 - câmera mais distante
     
-    // Initialize rendering system
+    // inicializar sistema de renderização
     framebuffer = nullptr;
-    rasterizer = new Rasterizer();    // Setup default lighting - light to the left and behind
+    rasterizer = new Rasterizer();
+    
+    // configurar iluminação padrão - luz à esquerda e atrás
     rasterizer->definirLuz(Vector3(-0.5f, 0.0f, -1.0f), Vector3(1.0f, 1.0f, 1.0f));
     rasterizer->definirCorAmbiente(Vector3(0.2f, 0.2f, 0.2f));
-    rasterizer->definirCorMaterial(Vector3(0.4f, 0.6f, 0.8f)); // Blue material
+    rasterizer->definirCorMaterial(Vector3(0.4f, 0.6f, 0.8f)); // material azul
     
-    // Inicializar transformações
+    // inicializar transformações
     rotacaoX = rotacaoY = rotacaoZ = 0.0f;
     translacaoX = translacaoY = translacaoZ = 0.0f;
-    escala = 0.6f; // Aumentado de 0.3 para 0.6 - objeto com mais zoom inicial
+    escala = 0.6f; // aumentado de 0.3 para 0.6 - objeto com mais zoom inicial
 }
 
 Objeto3D::~Objeto3D()
@@ -112,8 +120,8 @@ void Objeto3D::resetarTransformacoes()
 {
     rotacaoX = rotacaoY = rotacaoZ = 0.0f;
     translacaoX = translacaoY = translacaoZ = 0.0f;
-    escala = 0.6f; // Mesma escala inicial aumentada
-    distanciaCamera = 800.0f; // Mesma distância inicial
+    escala = 0.6f; // mesma escala inicial aumentada
+    distanciaCamera = 800.0f; // mesma distância inicial
 }
 
 void Objeto3D::definirDistanciaCamera(float distancia)
@@ -125,11 +133,11 @@ Vector3 Objeto3D::transformarPonto(Vector3 ponto)
 {
     Vector3 p = ponto;
     
-    // Aplicar escala
+    // aplicar escala
     p = p * escala;
     
-    // Aplicar rotações
-    // Rotação em X
+    // aplicar rotações usando matrizes de rotação 3D
+    // rotação em X
     if (rotacaoX != 0) {
         float cosX = cos(rotacaoX);
         float sinX = sin(rotacaoX);
@@ -139,7 +147,7 @@ Vector3 Objeto3D::transformarPonto(Vector3 ponto)
         p.z = z;
     }
     
-    // Rotação em Y
+    // rotação em Y
     if (rotacaoY != 0) {
         float cosY = cos(rotacaoY);
         float sinY = sin(rotacaoY);
@@ -149,7 +157,7 @@ Vector3 Objeto3D::transformarPonto(Vector3 ponto)
         p.z = z;
     }
     
-    // Rotação em Z
+    // rotação em Z
     if (rotacaoZ != 0) {
         float cosZ = cos(rotacaoZ);
         float sinZ = sin(rotacaoZ);
@@ -159,7 +167,7 @@ Vector3 Objeto3D::transformarPonto(Vector3 ponto)
         p.y = y;
     }
     
-    // Aplicar translação
+    // aplicar translação
     p.x += translacaoX;
     p.y += translacaoY;
     p.z += translacaoZ;
@@ -173,12 +181,12 @@ Vector2 Objeto3D::projetarPonto(Vector3 ponto)
     Vector2 resultado;
     
     if (projecaoPerspectiva) {
-        // Projeção perspectiva
+        // projeção perspectiva com divisão por profundidade
         float fator = distanciaCamera / (distanciaCamera + p.z);
         resultado.x = p.x * fator;
         resultado.y = p.y * fator;
     } else {
-        // Projeção ortográfica
+        // projeção ortográfica simples
         resultado.x = p.x;
         resultado.y = p.y;
     }
@@ -192,20 +200,21 @@ Vector2 Objeto3D::projetarPontoFramebuffer(Vector3 ponto)
     Vector2 resultado;
     
     if (projecaoPerspectiva) {
-        // Projeção perspectiva
+        // projeção perspectiva
         float fator = distanciaCamera / (distanciaCamera + p.z);
         resultado.x = p.x * fator;
         resultado.y = p.y * fator;
     } else {
-        // Projeção ortográfica
+        // projeção ortográfica
         resultado.x = p.x;
         resultado.y = p.y;
     }
-      // Convert from OpenGL coordinates to framebuffer pixel coordinates
+    
+    // converter de coordenadas OpenGL para coordenadas de pixel do framebuffer
     if (framebuffer) {
-        // Center the object in the framebuffer and keep same Y orientation as wireframe
+        // centralizar o objeto no framebuffer e manter mesma orientação Y do wireframe
         resultado.x = (framebuffer->getLargura() / 2) + resultado.x;
-        resultado.y = (framebuffer->getAltura() / 2) + resultado.y; // Keep same Y direction as wireframe
+        resultado.y = (framebuffer->getAltura() / 2) + resultado.y; // manter mesma direção Y do wireframe
     }
     
     return resultado;
@@ -215,8 +224,8 @@ Vector3 Objeto3D::transformarNormal(Vector3 normal)
 {
     Vector3 n = normal;
     
-    // Apply only rotations to normals (no scale or translation)
-    // Rotation in X
+    // aplicar apenas rotações às normais (sem escala ou translação)
+    // rotação em X
     if (rotacaoX != 0) {
         float cosX = cos(rotacaoX);
         float sinX = sin(rotacaoX);
@@ -226,7 +235,7 @@ Vector3 Objeto3D::transformarNormal(Vector3 normal)
         n.z = z;
     }
     
-    // Rotation in Y
+    // rotação em Y
     if (rotacaoY != 0) {
         float cosY = cos(rotacaoY);
         float sinY = sin(rotacaoY);
@@ -236,7 +245,7 @@ Vector3 Objeto3D::transformarNormal(Vector3 normal)
         n.z = z;
     }
     
-    // Rotation in Z
+    // rotação em Z
     if (rotacaoZ != 0) {
         float cosZ = cos(rotacaoZ);
         float sinZ = sin(rotacaoZ);
@@ -246,7 +255,7 @@ Vector3 Objeto3D::transformarNormal(Vector3 normal)
         n.y = y;
     }
     
-    // Normalize the normal after transformation
+    // normalizar a normal após transformação para manter comprimento unitário
     n.normalize();
     
     return n;
@@ -260,53 +269,60 @@ void Objeto3D::gerarSweepRotacional()
     std::vector<Vector2>& pontosCurva = curvaBezier->getPontosCurva();
     if (pontosCurva.size() < 2) return;
     
-    // Calcular centro da área de edição para converter coordenadas de tela para coordenadas de mundo 3D
-    // Estes valores devem corresponder aos mesmos usados em Aplicacao3D.cpp
+    // calcular centro da área de edição para converter coordenadas de tela para coordenadas de mundo 3D
+    // estes valores devem corresponder aos mesmos usados em Aplicacao3D.cpp
     int larguraTela = 1080;
     int alturaTela = 720;
     int metadeLargura = larguraTela / 2;
-    int centroX = (10 + metadeLargura - 10) / 2;  // Centro horizontal da área de edição
-    int centroY = (50 + alturaTela - 50) / 2;     // Centro vertical da área de edição
-      // Gerar vértices através de rotação
+    int centroX = (10 + metadeLargura - 10) / 2;  // centro horizontal da área de edição
+    int centroY = (50 + alturaTela - 50) / 2;     // centro vertical da área de edição
+    
+    // gerar vértices através de rotação ao redor do eixo Y
     float anguloIncremento = 2.0f * PI / numDivisoesRotacao;
-      for (int i = 0; i <= numDivisoesRotacao; i++) {
+    
+    for (int i = 0; i <= numDivisoesRotacao; i++) {
         float angulo = i * anguloIncremento;
         float cosA = cos(angulo);
         float sinA = sin(angulo);
-          // Calcular deslocamento vertical para sweep translacional
-        // Valores positivos fazem crescer para cima, negativos para baixo
+        
+        // calcular deslocamento vertical para sweep translacional
+        // valores positivos fazem crescer para cima, negativos para baixo
         float deslocamentoY = -i * sweepTranslacional;
         
-        for (int j = 0; j < pontosCurva.size(); j++) {
+        for (size_t j = 0; j < pontosCurva.size(); j++) {
             Vector2& p = pontosCurva[j];
             
-            // Converter coordenadas de tela (sistema centralizado) para coordenadas de mundo 3D
-            float xMundo = p.x - centroX;   // Deslocar origem do centro para obter distância do eixo Y
-            float yMundo = -(p.y - centroY); // Inverter Y e deslocar origem (sistema de coordenadas padrão)
+            // converter coordenadas de tela (sistema centralizado) para coordenadas de mundo 3D
+            float xMundo = p.x - centroX;   // deslocar origem do centro para obter distância do eixo Y
+            float yMundo = -(p.y - centroY); // inverter Y e deslocar origem (sistema de coordenadas padrão)
             
-            // Para rotação 3D, o raio é a distância absoluta do eixo Y (agora origem está centralizada)
+            // para rotação 3D, o raio é a distância absoluta do eixo Y (agora origem está centralizada)
             float raio = fabs(xMundo);
             
+            // criar vértice 3D rotacionando ao redor do eixo Y
             Vector3 vertice;
             vertice.x = raio * cosA;
-            vertice.y = yMundo + deslocamentoY; // Usar coordenada Y transformada + incremento vertical
+            vertice.y = yMundo + deslocamentoY; // usar coordenada Y transformada + incremento vertical
             vertice.z = raio * sinA;
             
             vertices.push_back(vertice);
         }
-    }      // Gerar triângulos
+    }
+    
+    // gerar triângulos conectando divisões adjacentes
     int numPontosCurva = static_cast<int>(pontosCurva.size());
     for (int i = 0; i < numDivisoesRotacao; i++) {
         for (int j = 0; j < numPontosCurva - 1; j++) {
+            // índices dos vértices na divisão atual
             int idx1 = i * numPontosCurva + j;
             int idx2 = i * numPontosCurva + j + 1;
             
-            // Conectar à próxima divisão (a última divisão conecta de volta à primeira para fechar o objeto)
+            // conectar à próxima divisão (a última divisão conecta de volta à primeira para fechar o objeto)
             int proximaDivisao = (i + 1) % (numDivisoesRotacao + 1);
             int idx3 = proximaDivisao * numPontosCurva + j;
             int idx4 = proximaDivisao * numPontosCurva + j + 1;
             
-            // Criar dois triângulos para formar um quad, garantindo orientação correta
+            // criar dois triângulos para formar um quad, garantindo orientação correta das faces
             int verticesSize = static_cast<int>(vertices.size());
             if (idx1 < verticesSize && idx2 < verticesSize && idx3 < verticesSize) {
                 triangulos.push_back(Triangulo(vertices[idx1], vertices[idx2], vertices[idx3]));
@@ -322,14 +338,15 @@ void Objeto3D::calcularNormaisVertices()
 {
     if (vertices.empty() || triangulos.empty()) return;
     
-    // Create vertex normal accumulator
+    // criar acumulador de normais dos vértices para smooth shading
     std::vector<Vector3> normaisVertices(vertices.size(), Vector3(0, 0, 0));
     std::vector<int> contadorNormais(vertices.size(), 0);
-      // Find vertex indices for each triangle and accumulate normals
+    
+    // encontrar índices dos vértices para cada triângulo e acumular normais
     for (int t = 0; t < static_cast<int>(triangulos.size()); t++) {
         Triangulo& tri = triangulos[t];
         
-        // Find vertex indices (simple approach - could be optimized with a lookup table)
+        // encontrar índices dos vértices (abordagem simples - poderia ser otimizada com tabela de lookup)
         int idx1 = -1, idx2 = -1, idx3 = -1;
         
         for (int i = 0; i < static_cast<int>(vertices.size()); i++) {
@@ -344,7 +361,7 @@ void Objeto3D::calcularNormaisVertices()
             }
         }
         
-        // Accumulate normals for found vertices
+        // acumular normais para vértices encontrados
         if (idx1 >= 0) {
             normaisVertices[idx1].x += tri.normal.x;
             normaisVertices[idx1].y += tri.normal.y;
@@ -365,8 +382,8 @@ void Objeto3D::calcularNormaisVertices()
         }
     }
     
-    // Average and normalize vertex normals
-    for (int i = 0; i < normaisVertices.size(); i++) {
+    // calcular média e normalizar normais dos vértices
+    for (size_t i = 0; i < normaisVertices.size(); i++) {
         if (contadorNormais[i] > 0) {
             normaisVertices[i].x /= contadorNormais[i];
             normaisVertices[i].y /= contadorNormais[i];
@@ -375,12 +392,12 @@ void Objeto3D::calcularNormaisVertices()
         }
     }
     
-    // Assign smooth normals back to triangles
-    for (int t = 0; t < triangulos.size(); t++) {
+    // atribuir normais suaves de volta aos triângulos
+    for (size_t t = 0; t < triangulos.size(); t++) {
         Triangulo& tri = triangulos[t];
         
-        // Find vertices again and assign smooth normals
-        for (int i = 0; i < vertices.size(); i++) {
+        // encontrar vértices novamente e atribuir normais suaves
+        for (size_t i = 0; i < vertices.size(); i++) {
             if (vertices[i].x == tri.v1.x && vertices[i].y == tri.v1.y && vertices[i].z == tri.v1.z) {
                 tri.n1 = normaisVertices[i];
             }
@@ -405,53 +422,58 @@ void Objeto3D::desenhar()
     if (triangulos.empty()) return;
     
     if (modoWireframe) {
-        // Traditional wireframe rendering
-        CV::color(0, 0, 1); // Azul para wireframe
+        // renderização wireframe tradicional usando linhas
+        CV::color(0, 0, 1); // azul para wireframe
         
-        for (int i = 0; i < triangulos.size(); i++) {
+        for (size_t i = 0; i < triangulos.size(); i++) {
             Triangulo& tri = triangulos[i];
             
+            // projetar vértices do triângulo para 2D
             Vector2 p1 = projetarPonto(tri.v1);
             Vector2 p2 = projetarPonto(tri.v2);
             Vector2 p3 = projetarPonto(tri.v3);
             
-            // Desenhar triângulo em wireframe
+            // desenhar triângulo em wireframe conectando as arestas
             CV::line(p1.x, p1.y, p2.x, p2.y);
             CV::line(p2.x, p2.y, p3.x, p3.y);
             CV::line(p3.x, p3.y, p1.x, p1.y);
         }
     } else {
-        // New rasterization with z-buffer and per-pixel lighting
+        // nova rasterização com z-buffer e iluminação per-pixel
         if (!framebuffer || !rasterizer) return;
         
-        // Clear framebuffer
+        // limpar framebuffer para nova renderização
         framebuffer->limpar();
         
-        // Rasterize all triangles
-        for (int i = 0; i < triangulos.size(); i++) {
+        // rasterizar todos os triângulos
+        for (size_t i = 0; i < triangulos.size(); i++) {
             Triangulo& tri = triangulos[i];
-              // Transform vertices to 3D world space
+            
+            // transformar vértices para espaço do mundo 3D
             Vector3 v1_world = transformarPonto(tri.v1);
             Vector3 v2_world = transformarPonto(tri.v2);
             Vector3 v3_world = transformarPonto(tri.v3);
             
-            // Transform normals to world space for proper lighting
+            // transformar normais para espaço do mundo para iluminação correta
             Vector3 n1_world = transformarNormal(tri.n1);
             Vector3 n2_world = transformarNormal(tri.n2);
             Vector3 n3_world = transformarNormal(tri.n3);
-              // Project to 2D screen space using framebuffer coordinates
+            
+            // projetar para espaço de tela 2D usando coordenadas do framebuffer
             Vector2 p1_2d = projetarPontoFramebuffer(tri.v1);
             Vector2 p2_2d = projetarPontoFramebuffer(tri.v2);
             Vector2 p3_2d = projetarPontoFramebuffer(tri.v3);
             
-            // Create raster vertices with 2D positions, 3D positions, and world-space normals
+            // criar vértices de rasterização com posições 2D, posições 3D e normais do espaço do mundo
             VerticeRaster v1_raster(p1_2d, v1_world, n1_world);
             VerticeRaster v2_raster(p2_2d, v2_world, n2_world);
             VerticeRaster v3_raster(p3_2d, v3_world, n3_world);
-              // Rasterize triangle with lighting
-            rasterizer->rasterizarTriangulo(*framebuffer, v1_raster, v2_raster, v3_raster);        }
+            
+            // rasterizar triângulo com iluminação
+            rasterizer->rasterizarTriangulo(*framebuffer, v1_raster, v2_raster, v3_raster);
+        }
         
-        // Framebuffer rendering complete - the caller will handle drawing it to screen
+        // renderização do framebuffer completa - o chamador cuidará de desenhar na tela
     }
 }
 
@@ -459,23 +481,24 @@ void Objeto3D::desenharNormais()
 {
     if (!mostrarNormais || triangulos.empty()) return;
     
-    CV::color(1, 1, 0); // Amarelo para normais
+    CV::color(1, 1, 0); // amarelo para vetores normais
     
-    for (int i = 0; i < triangulos.size(); i++) {
+    for (size_t i = 0; i < triangulos.size(); i++) {
         Triangulo& tri = triangulos[i];
         
-        // Calcular centro do triângulo
+        // calcular centro do triângulo para origem do vetor normal
         Vector3 centro;
         centro.x = (tri.v1.x + tri.v2.x + tri.v3.x) / 3.0f;
         centro.y = (tri.v1.y + tri.v2.y + tri.v3.y) / 3.0f;
         centro.z = (tri.v1.z + tri.v2.z + tri.v3.z) / 3.0f;
         
-        // Ponto final da normal
+        // calcular ponto final da normal para visualização
         Vector3 fimNormal;
         fimNormal.x = centro.x + tri.normal.x * 20.0f;
         fimNormal.y = centro.y + tri.normal.y * 20.0f;
         fimNormal.z = centro.z + tri.normal.z * 20.0f;
         
+        // projetar pontos e desenhar linha da normal
         Vector2 p1 = projetarPonto(centro);
         Vector2 p2 = projetarPonto(fimNormal);
         
