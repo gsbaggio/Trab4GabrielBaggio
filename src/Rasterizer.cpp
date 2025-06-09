@@ -73,17 +73,29 @@ Vector3 Rasterizer::calcularIluminacao(const Vector3& normal, const Vector3& pos
 
 void Rasterizer::desenharScanline(Framebuffer& framebuffer, const Scanline& scanline)
 {
-    int xInicio = (int)std::ceil(scanline.xInicio);
-    int xFim = (int)std::floor(scanline.xFim);
+    // Usar coordenadas de ponto flutuante para melhor precisão
+    int xInicio = (int)std::floor(scanline.xInicio + 0.5f); // Arredondar para o pixel mais próximo
+    int xFim = (int)std::floor(scanline.xFim + 0.5f);       // Arredondar para o pixel mais próximo
     
-    if (xFim <= xInicio) return;
+    // Garantir que pelo menos um pixel seja desenhado se a scanline tem largura
+    if (xFim < xInicio && scanline.xFim > scanline.xInicio) {
+        xFim = xInicio;
+    }
+    
+    if (xFim < xInicio) return;
     
     float deltaX = scanline.xFim - scanline.xInicio;
-    if (deltaX <= 0.0f) return;
+    if (deltaX == 0.0f) {
+        // Caso especial: linha vertical (um único pixel)
+        deltaX = 1.0f;
+    }
     
     for (int x = xInicio; x <= xFim; x++) {
+        if (x < 0 || x >= framebuffer.getLargura()) continue;
+        
         // Calcular fator de interpolação
-        float t = (x - scanline.xInicio) / deltaX;
+        float t = (deltaX != 0.0f) ? (x - scanline.xInicio) / deltaX : 0.0f;
+        t = std::max(0.0f, std::min(1.0f, t)); // Clampar t entre 0 e 1
         
         // Interpolar profundidade
         float z = scanline.zInicio + t * (scanline.zFim - scanline.zInicio);
@@ -121,27 +133,29 @@ void Rasterizer::rasterizarTriangulo(Framebuffer& framebuffer,
     const VerticeRaster& vTop = vertices[0];
     const VerticeRaster& vMid = vertices[1];
     const VerticeRaster& vBot = vertices[2];
+      // Verificar se o triângulo tem altura suficiente para rasterizar
+    if (vBot.pos2D.y - vTop.pos2D.y < 0.5f) return;
     
-    // Verificar se o triângulo tem altura
-    if ((int)vBot.pos2D.y == (int)vTop.pos2D.y) return;
-    
-    // Rasterizar parte superior do triângulo (vTop -> vMid)
-    int yInicio = (int)std::ceil(vTop.pos2D.y);
-    int yMeio = (int)std::floor(vMid.pos2D.y);
-    int yFim = (int)std::floor(vBot.pos2D.y);
+    // Usar arredondamento mais preciso para as bordas dos triângulos
+    int yInicio = (int)std::floor(vTop.pos2D.y + 0.5f);
+    int yMeio = (int)std::floor(vMid.pos2D.y + 0.5f);
+    int yFim = (int)std::floor(vBot.pos2D.y + 0.5f);
     
     for (int y = yInicio; y <= yFim; y++) {
         if (y < 0 || y >= framebuffer.getAltura()) continue;
         
         // Calcular intersecções das arestas com a scanline
         VerticeRaster esquerda, direita;
-        
-        if (y <= yMeio) {
+          if (y <= yMeio) {
             // Parte superior: interpolar entre vTop-vMid e vTop-vBot
             float t1 = (vMid.pos2D.y - vTop.pos2D.y != 0) ? 
                       (y - vTop.pos2D.y) / (vMid.pos2D.y - vTop.pos2D.y) : 0.0f;
             float t2 = (vBot.pos2D.y - vTop.pos2D.y != 0) ? 
                       (y - vTop.pos2D.y) / (vBot.pos2D.y - vTop.pos2D.y) : 0.0f;
+            
+            // Clampar os fatores de interpolação para evitar extrapolação
+            t1 = std::max(0.0f, std::min(1.0f, t1));
+            t2 = std::max(0.0f, std::min(1.0f, t2));
             
             VerticeRaster p1 = interpolar(vTop, vMid, t1);
             VerticeRaster p2 = interpolar(vTop, vBot, t2);
@@ -150,13 +164,16 @@ void Rasterizer::rasterizarTriangulo(Framebuffer& framebuffer,
                 esquerda = p1; direita = p2;
             } else {
                 esquerda = p2; direita = p1;
-            }
-        } else {
+            }        } else {
             // Parte inferior: interpolar entre vMid-vBot e vTop-vBot
             float t1 = (vBot.pos2D.y - vMid.pos2D.y != 0) ? 
                       (y - vMid.pos2D.y) / (vBot.pos2D.y - vMid.pos2D.y) : 0.0f;
             float t2 = (vBot.pos2D.y - vTop.pos2D.y != 0) ? 
                       (y - vTop.pos2D.y) / (vBot.pos2D.y - vTop.pos2D.y) : 0.0f;
+            
+            // Clampar os fatores de interpolação para evitar extrapolação
+            t1 = std::max(0.0f, std::min(1.0f, t1));
+            t2 = std::max(0.0f, std::min(1.0f, t2));
             
             VerticeRaster p1 = interpolar(vMid, vBot, t1);
             VerticeRaster p2 = interpolar(vTop, vBot, t2);

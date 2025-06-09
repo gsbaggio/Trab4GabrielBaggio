@@ -182,7 +182,7 @@
 	<math.h>
 	<stdio.h>
 
-1749486286 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
+1749487687 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
 	"Aplicacao3D.h"
 	"gl_canvas2d.h"
 	<stdio.h>
@@ -192,7 +192,7 @@
 	"gl_canvas2d.h"
 	<math.h>
 
-1749486597 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.cpp
+1749487554 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\objeto3d.cpp
 	"Objeto3D.h"
 	"gl_canvas2d.h"
 	<math.h>
@@ -213,7 +213,7 @@
 	"gl_canvas2d.h"
 	<algorithm>
 
-1749141321 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\rasterizer.cpp
+1749487554 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\rasterizer.cpp
 	"Rasterizer.h"
 	<algorithm>
 	<cmath>

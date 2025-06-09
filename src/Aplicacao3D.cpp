@@ -228,32 +228,32 @@ void Aplicacao3D::desenharInterface()
         CV::text(15, 210, buffer);
     }    // Instruções do lado direito
     CV::color(1, 1, 1);
-    CV::text(metadeLargura + 15, 230, "J/K: Diminuir/Aumentar divisoes de rotacao");
-    CV::text(metadeLargura + 15, 210, "Q/E: Sweep p/ baixo/cima");
-    CV::text(metadeLargura + 15, 190, "Setas: Transladar objeto");
-    CV::text(metadeLargura + 15, 170, "Mouse: Rotacionar objeto");
-    CV::text(metadeLargura + 15, 150, "I/O: Zoom in/out");
-    CV::text(metadeLargura + 15, 130, "N: Mostrar normais");
-    CV::text(metadeLargura + 15, 110, "P: Alternar projecao");    CV::color(1, 1, 0);
-    CV::text(metadeLargura + 15, 310, "W: Wireframe/Filled");
-    CV::text(metadeLargura + 15, 330, "L: Luz esq.atras/dir.frente");
+    CV::text(metadeLargura + 15, 210, "J/K: Diminuir/Aumentar divisoes de rotacao");
+    CV::text(metadeLargura + 15, 190, "Q/E: Sweep p/ baixo/cima");
+    CV::text(metadeLargura + 15, 170, "Setas: Transladar objeto");
+    CV::text(metadeLargura + 15, 150, "Mouse: Rotacionar objeto");
+    CV::text(metadeLargura + 15, 130, "I/O: Zoom in/out");
+    CV::text(metadeLargura + 15, 110, "N: Mostrar normais");
+    CV::text(metadeLargura + 15, 90, "P: Alternar projecao");    CV::color(1, 1, 0);
+    CV::text(metadeLargura + 15, 290, "W: Wireframe/Filled");
+    CV::text(metadeLargura + 15, 310, "L: Luz esq.atras/dir.frente");
     CV::color(1, 1, 1);
     
     // Informações do objeto 3D
     if (objeto) {
         char buffer[100];
         sprintf(buffer, "Triangulos: %d", objeto->getNumTriangulos());
-        CV::text(metadeLargura + 15, 250, buffer);
+        CV::text(metadeLargura + 15, 230, buffer);
         
         
         sprintf(buffer, "Divisoes rotacao: %d", objeto->getNumDivisoesRotacao());
-        CV::text(metadeLargura + 15, 270, buffer);
+        CV::text(metadeLargura + 15, 250, buffer);
         
         sprintf(buffer, "Sweep translacional: %.1f", objeto->getSweepTranslacional());
-        CV::text(metadeLargura + 15, 290, buffer);
+        CV::text(metadeLargura + 15, 270, buffer);
         
         CV::color(0, 1, 1);
-        CV::text(metadeLargura + 15, 90, objeto->getProjecaoPerspectiva() ? "Perspectiva" : "Ortografica");
+        CV::text(metadeLargura + 15, 70, objeto->getProjecaoPerspectiva() ? "Perspectiva" : "Ortografica");
     }
     
     // Mensagem se não há pontos suficientes

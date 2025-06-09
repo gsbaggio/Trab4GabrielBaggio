@@ -294,22 +294,24 @@ void Objeto3D::gerarSweepRotacional()
             
             vertices.push_back(vertice);
         }
-    }
-      // Gerar triângulos
+    }      // Gerar triângulos
     int numPontosCurva = static_cast<int>(pontosCurva.size());
     for (int i = 0; i < numDivisoesRotacao; i++) {
         for (int j = 0; j < numPontosCurva - 1; j++) {
             int idx1 = i * numPontosCurva + j;
             int idx2 = i * numPontosCurva + j + 1;
-            int idx3 = ((i + 1) % (numDivisoesRotacao + 1)) * numPontosCurva + j;
-            int idx4 = ((i + 1) % (numDivisoesRotacao + 1)) * numPontosCurva + j + 1;
             
-            // Criar dois triângulos para formar um quad
+            // Conectar à próxima divisão (a última divisão conecta de volta à primeira para fechar o objeto)
+            int proximaDivisao = (i + 1) % (numDivisoesRotacao + 1);
+            int idx3 = proximaDivisao * numPontosCurva + j;
+            int idx4 = proximaDivisao * numPontosCurva + j + 1;
+            
+            // Criar dois triângulos para formar um quad, garantindo orientação correta
             int verticesSize = static_cast<int>(vertices.size());
             if (idx1 < verticesSize && idx2 < verticesSize && idx3 < verticesSize) {
                 triangulos.push_back(Triangulo(vertices[idx1], vertices[idx2], vertices[idx3]));
             }
-            if (idx2 < verticesSize && idx3 < verticesSize && idx4 < verticesSize) {
+            if (idx2 < verticesSize && idx4 < verticesSize && idx3 < verticesSize) {
                 triangulos.push_back(Triangulo(vertices[idx2], vertices[idx4], vertices[idx3]));
             }
         }
