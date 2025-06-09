@@ -57,7 +57,7 @@
 	<math.h>
 	<stdio.h>
 
-1749498150 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\main.cpp
+1749500151 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\main.cpp
 	<GL/glut.h>
 	<GL/freeglut_ext.h>
 	<math.h>
@@ -166,7 +166,7 @@
 	"Objeto3D.h"
 	"Vector2.h"
 
-1749494495 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\curvabezier.h
+1749500182 c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\curvabezier.h
 	"Vector2.h"
 	<vector>
 
@@ -182,12 +182,12 @@
 	<math.h>
 	<stdio.h>
 
-1749497129 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
+1749500049 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\aplicacao3d.cpp
 	"Aplicacao3D.h"
 	"gl_canvas2d.h"
 	<stdio.h>
 
-1749497184 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\curvabezier.cpp
+1749500182 source:c:\users\samsung\desktop\cg\demos\trab4gabrielbaggio\src\curvabezier.cpp
 	"CurvaBezier.h"
 	"gl_canvas2d.h"
 	<math.h>
